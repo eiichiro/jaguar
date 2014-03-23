@@ -124,7 +124,7 @@ public final class Jaguar {
 	 * 
 	 * @param components The component classes to be installed.
 	 */
-	public static synchronized void install(Collection<Class<?>> components) {
+	public static void install(Collection<Class<?>> components) {
 		for (Class<?> component : components) {
 			install(component);
 		}
@@ -138,7 +138,7 @@ public final class Jaguar {
 	 * 
 	 * @param components The component classes to be installed.
 	 */
-	public static synchronized void install(Class<?>... components) {
+	public static void install(Class<?>... components) {
 		for (Class<?> component : components) {
 			install(component);
 		}

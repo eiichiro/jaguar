@@ -300,18 +300,21 @@ public class Container {
 			
 		};
 		Context c = context.apply(descriptor);
-		T component = c.get(descriptor);
 		
-		if (component == null) {
-			component = new Assembler<T>(this, descriptor).assemble();
+		synchronized (c) {
+			T component = c.get(descriptor);
 			
-			if (component != null) {
-				Event.of(Activated.class).on(component).fire();
-				c.put(descriptor, component);
+			if (component == null) {
+				component = new Assembler<T>(this, descriptor).assemble();
+				
+				if (component != null) {
+					Event.of(Activated.class).on(component).fire();
+					c.put(descriptor, component);
+				}
 			}
+			
+			return component;
 		}
-		
-		return component;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -344,7 +347,7 @@ public class Container {
 	 * @param component The component instance of the specified component class.
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> void install(Class<T> component) {
+	public synchronized <T> void install(Class<T> component) {
 		Preconditions.checkArgument(component != null, 
 				"Parameter 'component' must not be [" + component + "]");
 		
