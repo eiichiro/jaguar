@@ -26,9 +26,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.ServletContext;
 
@@ -197,7 +198,14 @@ public class ClasspathScanner implements Scanner {
 				}
 				
 			});
-			Set<Class<?>> classes = new HashSet<Class<?>>();
+			Set<Class<?>> classes = new TreeSet<Class<?>>(new Comparator<Class<?>>() {
+
+				@Override
+				public int compare(Class<?> o1, Class<?> o2) {
+					return o1.getName().compareTo(o2.getName());
+				}
+				
+			});
 			
 			for (CtClass ctClass : ctClasses) {
 				try {
