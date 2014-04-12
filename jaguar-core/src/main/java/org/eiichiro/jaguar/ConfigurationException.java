@@ -18,7 +18,7 @@ package org.eiichiro.jaguar;
 /**
  * Thrown when any component misconfiguration is detected by the container.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public class ConfigurationException extends RuntimeException {
 

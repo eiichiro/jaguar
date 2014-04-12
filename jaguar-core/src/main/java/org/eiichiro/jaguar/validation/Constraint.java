@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * {@code Constraint} is a meta annotation to represent constraint on the 
  * component field or the component instance.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

@@ -39,7 +39,7 @@ import org.eiichiro.jaguar.scope.Thread;
  * <li>Returning type is not constrained, but always ignored</li>
  * </ul>
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

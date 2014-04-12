@@ -64,7 +64,7 @@ import org.eiichiro.jaguar.scope.WebContext;
  * &lt;/context-param&gt;
  * </pre>
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public class WebListener implements ServletRequestListener,
 		HttpSessionListener, ServletContextListener {

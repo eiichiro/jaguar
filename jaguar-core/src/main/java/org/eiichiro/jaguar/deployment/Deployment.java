@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 /**
  * {@code @Deployment} is the meta annotation to represent deployment qualifier.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

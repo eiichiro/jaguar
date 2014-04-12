@@ -34,7 +34,7 @@ import org.eiichiro.jaguar.lifecycle.Passivated;
  * application is not running in Web environment, this context becomes 
  * equal to {@link SingletonContext}.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Builtin
 @Singleton(eager=true)

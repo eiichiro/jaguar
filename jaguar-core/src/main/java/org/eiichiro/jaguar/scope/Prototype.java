@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
  * qualifier is omitted on a component declaration, the component is treated as 
  * prototype scope.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

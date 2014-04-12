@@ -19,7 +19,7 @@ package org.eiichiro.jaguar.scope;
  * Web context (e.g. {@code ServletContext}, {@code HttpSession} and 
  * {@code HttpServletRequest}) backed component store.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public interface WebContext<C> extends Context {
 

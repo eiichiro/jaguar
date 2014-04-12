@@ -22,7 +22,7 @@ import org.eiichiro.jaguar.Descriptor;
  * Scope qualifier must have the corresponding {@code Context} implementation 
  * class that components are stored in.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public interface Context {
 

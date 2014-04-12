@@ -23,7 +23,7 @@ import org.eiichiro.jaguar.scope.Singleton;
  * Built-in {@link Validator} implementation corresponding to the 
  * {@code Required} constraint.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Builtin
 @Singleton

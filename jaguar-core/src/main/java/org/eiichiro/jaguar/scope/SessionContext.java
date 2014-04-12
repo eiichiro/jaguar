@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * is not running in Web environment, this context becomes equal to 
  * {@link ThreadContext}.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Builtin
 @Singleton(eager=true)

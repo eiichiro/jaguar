@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 /**
  * {@code @Scope} is a meta annotation to represent component scope qualifier.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

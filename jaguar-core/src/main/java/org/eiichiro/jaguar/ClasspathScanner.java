@@ -54,7 +54,7 @@ import com.google.common.base.Preconditions;
  * Built-in implementation of {@link Scanner} that scans components from runtime 
  * classpath.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public class ClasspathScanner implements Scanner {
 

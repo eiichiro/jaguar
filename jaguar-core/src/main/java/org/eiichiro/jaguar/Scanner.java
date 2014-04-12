@@ -21,7 +21,7 @@ import java.util.Collection;
  * Scans components from its search path.
  * This interface is intended to use with {@link Jaguar#install(Collection)}.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public interface Scanner {
 

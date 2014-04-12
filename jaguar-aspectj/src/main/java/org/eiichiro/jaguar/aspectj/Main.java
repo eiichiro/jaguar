@@ -20,7 +20,7 @@ import static org.eiichiro.jaguar.aspectj.Version.*;
 /**
  * Command line interface to print the version &amp; copyright information.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public final class Main {
 

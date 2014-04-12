@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
  * @see Passivated
  * @see Destroyed
  * @see Failed
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

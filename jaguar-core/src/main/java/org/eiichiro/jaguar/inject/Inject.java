@@ -28,7 +28,7 @@ import org.eiichiro.jaguar.Jaguar;
  * {@code @Inject} is a marker annotation to specify the field that the 
  * dependent components are resolved and injected by the {@link Jaguar}.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

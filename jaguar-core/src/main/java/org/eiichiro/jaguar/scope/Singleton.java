@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * {@code @Singleton}-annotated component is sustained in singleton 
  * (per-{@code ClassLoader}) scope.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

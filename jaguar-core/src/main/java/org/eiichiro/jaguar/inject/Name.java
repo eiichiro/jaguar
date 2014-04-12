@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * Built-in binding annotation to qualify the component to be injected by its 
  * name.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

@@ -26,7 +26,7 @@ import org.eiichiro.jaguar.inject.Name;
  * Built-in {@link Context} implementation corresponding to the 
  * {@link Thread} scope.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Builtin
 @Singleton(eager=true)

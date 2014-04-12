@@ -30,7 +30,7 @@ import com.google.common.base.Preconditions;
  * {@code @Inject}-annotated constructor's parameters and field that the dependent 
  * component to be injected.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public class Key<T> {
 

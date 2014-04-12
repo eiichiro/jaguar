@@ -28,7 +28,7 @@ import org.eiichiro.jaguar.Stereotype;
  * A stereotype to represent that the annotated component is assembled by 
  * Jaguar AspectJ.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Stereotype
 @Documented

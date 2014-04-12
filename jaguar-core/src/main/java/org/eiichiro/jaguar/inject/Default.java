@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * preference if the container has duplicated components match to the specified 
  * component type or {@link Key}.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

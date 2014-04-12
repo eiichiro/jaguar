@@ -18,7 +18,7 @@ package org.eiichiro.jaguar;
 /**
  * Represents the version for this Jaguar build.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public final class Version {
 

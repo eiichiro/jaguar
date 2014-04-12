@@ -63,7 +63,7 @@ import com.google.common.collect.Sets;
  * {@code Container} is the core of Jaguar. {@code Container} deploys and 
  * manages Jaguar components.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Builtin
 @Singleton

@@ -31,7 +31,7 @@ import org.eiichiro.jaguar.lifecycle.Passivated;
  * {@code SingletonContext} stores a component in static global store. So the 
  * components stored in this context are sustained in per-{@code ClassLoader}.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Builtin
 @Singleton

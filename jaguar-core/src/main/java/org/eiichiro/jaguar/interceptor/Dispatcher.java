@@ -49,7 +49,7 @@ import net.sf.cglib.proxy.MethodProxy;
  * joinpoint method is declared on the component class.
  * 
  * @see Assembler
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public class Dispatcher implements MethodInterceptor {
 

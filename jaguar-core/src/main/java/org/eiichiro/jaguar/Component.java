@@ -21,7 +21,7 @@ package org.eiichiro.jaguar;
  * Jaguar container when you need to manage any third party component the 
  * source code is unmodifiable.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public abstract class Component<T> {
 

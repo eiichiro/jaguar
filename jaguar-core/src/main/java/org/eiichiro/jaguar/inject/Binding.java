@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * Binding annotation is used to qualify the component to be injected strictly 
  * in addition to its component type.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

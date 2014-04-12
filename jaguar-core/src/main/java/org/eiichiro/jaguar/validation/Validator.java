@@ -26,7 +26,7 @@ import org.eiichiro.jaguar.Assembler;
  * implementation class to validate the specified component field or the 
  * component instance.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public interface Validator<C extends Annotation> {
 

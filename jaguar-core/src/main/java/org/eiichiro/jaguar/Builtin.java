@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * {@code Builtin} is a {@link Stereotype} to indicate that the annotated class 
  * is a Jaguar's built-in component.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Stereotype
 @Documented

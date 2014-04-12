@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * Intercept annotation is used to specify the interceptor class to be bound to 
  * a component method.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

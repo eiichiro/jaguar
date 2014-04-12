@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * {@code @Production}-annotated component is deployed on production deployment.
  * This is the default deployment qualifier that the Jaguar runs on.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

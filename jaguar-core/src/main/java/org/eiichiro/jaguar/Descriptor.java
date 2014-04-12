@@ -45,7 +45,7 @@ import com.google.common.collect.Multimap;
 /**
  * {@code Descriptor} describes the component's structure.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public class Descriptor<T> implements Serializable {
 

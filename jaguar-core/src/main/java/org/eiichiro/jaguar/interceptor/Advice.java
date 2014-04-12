@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * @see After
  * @see Around
  * @see Throwing
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

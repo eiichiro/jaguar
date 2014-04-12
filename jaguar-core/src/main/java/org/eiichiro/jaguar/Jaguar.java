@@ -31,7 +31,7 @@ import com.google.common.base.Preconditions;
 /**
  * The entry point to the Jaguar.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public final class Jaguar {
 

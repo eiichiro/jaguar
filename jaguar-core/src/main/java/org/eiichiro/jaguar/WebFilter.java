@@ -41,7 +41,7 @@ import javax.servlet.http.HttpSession;
  * &lt;/filter-mapping&gt;
  * </pre>
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public class WebFilter implements Filter {
 

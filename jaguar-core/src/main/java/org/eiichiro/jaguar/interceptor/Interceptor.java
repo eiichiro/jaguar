@@ -29,7 +29,7 @@ import org.eiichiro.jaguar.Stereotype;
  * Interceptor class must be annotated with this stereotype and intercept 
  * annotation to be bound.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Stereotype
 @Documented

@@ -26,7 +26,7 @@ import org.eiichiro.jaguar.inject.Name;
  * {@code #get(Descriptor)} method always returns <code>null</code> and 
  * {@code #put(Descriptor, Object)} method does no-op.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Builtin
 @Singleton(eager=true)

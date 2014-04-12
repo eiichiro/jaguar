@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * If the application is not running in Web environment, this scope becomes 
  * equal to {@link Thread} scope.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

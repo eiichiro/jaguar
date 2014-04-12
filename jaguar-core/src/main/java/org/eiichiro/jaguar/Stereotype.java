@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * {@code @Stereotype} is the meta annotation to bring together some binding 
  * annotations, scope qualifier and deployment qualifier and to give them an alias.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 @Documented
 @Inherited

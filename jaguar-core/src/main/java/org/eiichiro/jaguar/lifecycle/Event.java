@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * If lifecycle event fires, the component methods listening to the lifecycle 
  * (methods annotated with the lifecycle) are called back.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public class Event<L extends Annotation> {
 

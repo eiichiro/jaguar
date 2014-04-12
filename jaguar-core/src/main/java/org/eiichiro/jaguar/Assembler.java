@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 /**
  * {@code Assembler} assembles a component instance according to the descriptor.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public class Assembler<T> {
 

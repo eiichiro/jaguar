@@ -22,7 +22,7 @@ import java.lang.reflect.Field;
  * Thrown when a {@link Validator}'s {@code Validator#validate(Object)} method 
  * returns <code>false</code>.
  * 
- * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
 public class ViolationException extends RuntimeException {
 
