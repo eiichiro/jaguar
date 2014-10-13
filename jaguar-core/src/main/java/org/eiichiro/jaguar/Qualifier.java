@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eiichiro.jaguar.scope;
+package org.eiichiro.jaguar;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -22,27 +22,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.eiichiro.jaguar.Qualifier;
-
 /**
- * {@code @Scope} is a meta annotation to represent component scope qualifier.
+ * {@code Qualifier}
  * 
- * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
+ * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
  */
-@Qualifier
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
-public @interface Scope {
-	
-	/**
-	 * Returns the {@code Context} implementation class corresponding to the 
-	 * scope qualifier.
-	 * 
-	 * @return The {@code Context} implementation class corresponding to the 
-	 * scope qualifier.
-	 */
-	Class<? extends Context> value();
-	
-}
+public @interface Qualifier {}

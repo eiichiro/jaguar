@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Eiichiro Uchiumi. All Rights Reserved.
+ * Copyright (C) 2014 Eiichiro Uchiumi. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.eiichiro.jaguar.Qualifier;
+
 /**
  * {@code Constraint} is a meta annotation to represent constraint on the 
  * component field or the component instance.
  * 
  * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
+@Qualifier
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)

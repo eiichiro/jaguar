@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Eiichiro Uchiumi. All Rights Reserved.
+ * Copyright (C) 2014 Eiichiro Uchiumi. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import java.lang.annotation.Target;
  * 
  * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
+@Qualifier
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)

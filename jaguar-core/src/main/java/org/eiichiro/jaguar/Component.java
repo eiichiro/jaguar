@@ -15,47 +15,21 @@
  */
 package org.eiichiro.jaguar;
 
-/**
- * {@code Component} wraps a component instance.
- * You need to declare a subclass of {@code Component} and install it to the 
- * Jaguar container when you need to manage any third party component the 
- * source code is unmodifiable.
- * 
- * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
- */
-public abstract class Component<T> {
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-	/**
-	 * Returns the component instance. The deployment qualifier, component scope, 
-	 * lifecycle and dependencies on the instance are managed by Jaguar.
-	 * <b>
-	 * NOTE: Jaguar manages not the instance {@code Component#instance()} 
-	 * method returns, but the {@code Component} instance itself. So 
-	 * {@code Component#instance()} method on a {@code Component} instance 
-	 * should return the same instance anytime for the component scope consistency.
-	 * </b>
-	 * Example implementation: 
-	 * <pre>
-	 * public class YourComponent extends Component&lt;YourObject&gt; {
-	 * 
-	 *     private final YourObject instance;
-	 *     
-	 *     public YourComponent() {
-	 *         // Instantiating third party component and caching it.
-	 *         instance = new YourObject();
-	 *     }
-	 *     
-	 *     {@code @Override}
-	 *     public Object instance() {
-	 *         // Returning the same instance anytime. 
-	 *         return instance;
-	 *     }
-	 * 
-	 * }
-	 * </pre>
-	 * 
-	 * @return The component instance.
-	 */
-	public abstract T instance();
-	
-}
+/**
+ * {@code Provider}
+ * 
+ * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
+ */
+@Stereotype
+@Documented
+@Inherited
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface Component {}
