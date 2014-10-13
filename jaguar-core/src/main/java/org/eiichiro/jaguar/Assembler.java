@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Eiichiro Uchiumi. All Rights Reserved.
+ * Copyright (C) 2011-2014 Eiichiro Uchiumi. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,9 +27,9 @@ import net.sf.cglib.core.DefaultNamingPolicy;
 import net.sf.cglib.core.NamingPolicy;
 import net.sf.cglib.proxy.Enhancer;
 
+import org.eiichiro.jaguar.aspect.Interceptor;
 import org.eiichiro.jaguar.inject.Binding;
 import org.eiichiro.jaguar.inject.Key;
-import org.eiichiro.jaguar.interceptor.Dispatcher;
 import org.eiichiro.jaguar.lifecycle.Constructed;
 import org.eiichiro.jaguar.lifecycle.Event;
 import org.eiichiro.jaguar.validation.Constraint;
@@ -104,7 +104,7 @@ public class Assembler<T> {
 	 * {@code Descriptor#type()} returns. 
 	 * When a joinpoint method is declared on the component class, assembler 
 	 * generates the subclass dynamically with <a href="http://cglib.sourceforge.net/">cglib</a> 
-	 * before the instantiation and instantiates it attaching {@link Dispatcher} 
+	 * before the instantiation and instantiates it attaching {@link Interceptor} 
 	 * as the method invocation handler to intercept the method invocations. 
 	 * After the instance construction, assembler fires the {@link Constructed} 
 	 * event on the instance. If any exception has occurred, assembler returns 
@@ -121,7 +121,7 @@ public class Assembler<T> {
 	 * constrained fields are validated, the assembled instance is returned.</li>
 	 * </ol>
 	 * 
-	 * @return Component instance assembled.
+	 * @return Provider instance assembled.
 	 */
 	@SuppressWarnings("unchecked")
 	public T assemble() {
@@ -140,7 +140,7 @@ public class Assembler<T> {
 				} else {
 					Enhancer enhancer = new Enhancer();
 					enhancer.setSuperclass(descriptor.type());
-					enhancer.setCallback(new Dispatcher(container, descriptor));
+					enhancer.setCallback(new Interceptor(container, descriptor));
 					enhancer.setNamingPolicy(NAMING_POLICY);
 					
 					if (constructor == null) {
@@ -153,7 +153,7 @@ public class Assembler<T> {
 				}
 				
 			} catch (Exception e) {
-				logger.warn("Component cannot be instantiated: Descriptor [" + descriptor + "]", e);
+				logger.warn("Provider cannot be instantiated: Descriptor [" + descriptor + "]", e);
 				return null;
 			}
 			
@@ -206,7 +206,7 @@ public class Assembler<T> {
 					try {
 						value = field.get(instance);
 					} catch (Exception e) {
-						logger.warn("Component field [" + field + "] cannot be validated", e);
+						logger.warn("Provider field [" + field + "] cannot be validated", e);
 					}
 					
 					boolean valid = false;
@@ -264,7 +264,7 @@ public class Assembler<T> {
 			}
 		}
 		
-		logger.debug("Component has been assembled: Descriptor [" + descriptor + "]");
+		logger.debug("Provider has been assembled: Descriptor [" + descriptor + "]");
 		return instance;
 	}
 	

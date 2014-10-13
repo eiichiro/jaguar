@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Eiichiro Uchiumi. All Rights Reserved.
+ * Copyright (C) 2014 Eiichiro Uchiumi. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.apache.commons.lang.ClassUtils;
+import org.eiichiro.jaguar.inject.Provider;
 import org.eiichiro.jaguar.inject.Default;
 import org.eiichiro.jaguar.inject.Key;
 import org.eiichiro.jaguar.inject.Name;
@@ -78,7 +79,7 @@ public class Container {
 	
 	private ListMultimap<Class<?>, Descriptor<?>> components = ArrayListMultimap.create();
 	
-	private ListMultimap<Annotation, Descriptor<?>> interceptors = ArrayListMultimap.create();
+	private ListMultimap<Annotation, Descriptor<?>> pointcuts = ArrayListMultimap.create();
 	
 	private Map<Class<? extends Annotation>, Descriptor<? extends Context>> contexts 
 			= MapConstraints.constrainedMap(
@@ -143,7 +144,7 @@ public class Container {
 	 * @return The component instance of the specified component type.
 	 */
 	public <T> T component(Class<T> component) {
-		logger.debug("Component is requested with type: Type [" + component + "]");
+		logger.debug("Provider is requested with type: Type [" + component + "]");
 		Preconditions.checkArgument(component != null, 
 				"Parameter 'component' must not be [" + component + "]");
 		List<Descriptor<?>> descriptors = new ArrayList<>();
@@ -161,12 +162,12 @@ public class Container {
 		if (descriptors.isEmpty()) {
 			logger.warn("No component returned: Current deployment ["
 					+ ((deployment == null) ? deployment : deployment.getSimpleName())
-					+ "]; Component type [" + component 
+					+ "]; Provider type [" + component 
 					+ "]; You must install an appropriate component on ahead "
 					+ "invoking [public <T> void install(Class<T> component)]");
 			return null;
 		} else if (descriptors.size() > 1) {
-			logger.warn("Component is duplicated: Component type [" + component
+			logger.warn("Provider is duplicated: Provider type [" + component
 					+ "]; You must specify more concrete type");
 			return null;
 		}
@@ -176,7 +177,7 @@ public class Container {
 	
 	/**
 	 * Returns assembled component instance corresponding to the specified key 
-	 * (Component type and binding annotations).
+	 * (Provider type and binding annotations).
 	 * <b>NOTE: This method is designed for an internal use.</b>
 	 * If the component is not found or duplicated, this method returns 
 	 * <code>null</code>. If a {@link Default} qualified component is included 
@@ -188,7 +189,7 @@ public class Container {
 	 * @return The component instance corresponding to the specified key.
 	 */
 	public <T> T component(final Key<T> key) {
-		logger.debug("Component is requested with key: Key [" + key + "]");
+		logger.debug("Provider is requested with key: Key [" + key + "]");
 		Collection<Descriptor<?>> descriptors = new ArrayList<>();
 		Class<?> deployment = deployment();
 		
@@ -204,7 +205,7 @@ public class Container {
 		if (descriptors.isEmpty()) {
 			logger.warn("No component returned: Current deployment [" 
 					+ ((deployment == null) ? deployment : deployment.getSimpleName())
-					+ "]; Component key [" + key 
+					+ "]; Provider key [" + key 
 					+ "]; You must install an appropriate component on ahead "
 					+ "invoking [public <T> void install(Class<T> component)]");
 			return null;
@@ -219,7 +220,7 @@ public class Container {
 		});
 		
 		if (descriptors.isEmpty()) {
-			logger.warn("Component is missing: Component key [" + key 
+			logger.warn("Provider is missing: Provider key [" + key 
 					+ "]; You must specify binding annotations on the field correctly");
 			return null;
 		} else if (descriptors.size() == 1) {
@@ -244,7 +245,7 @@ public class Container {
 				logger.debug("@Default qualified component [" + descriptor + "] is returned in preference");
 				return instance(component(descriptor));
 			} else {
-				logger.warn("Component is duplicated: Component key [" + key
+				logger.warn("Provider is duplicated: Provider key [" + key
 						+ "]; You must specify more concrete type " 
 						+ "or binding annotations strictly");
 				return null;
@@ -263,13 +264,13 @@ public class Container {
 	 * descriptor.
 	 */
 	public <T> T component(Descriptor<T> descriptor) {
-		logger.debug("Component is requested with descriptor: Descriptor [" + descriptor + "]");
+		logger.debug("Provider is requested with descriptor: Descriptor [" + descriptor + "]");
 		Set<Class<? extends Annotation>> deployments = descriptor.deployments();
 		Class<?> deployment = deployment();
 		
 		if (deployment != null && !deployments.isEmpty() && !deployments.contains(deployment)) {
 			logger.warn("No component returned: Current deployment [" + deployment.getSimpleName() 
-					+ "]; Component descriptor [" + descriptor 
+					+ "]; Provider descriptor [" + descriptor 
 					+ "]; You must install an appropriate component on ahead "
 					+ "invoking [public <T> void install(Class<T> component)]");
 			return null;
@@ -319,7 +320,7 @@ public class Container {
 	
 	@SuppressWarnings("unchecked")
 	private <T> T instance(Object component) {
-		return (component instanceof Component) ? ((Component<T>) component).instance() : (T) component;
+		return (component instanceof Provider) ? ((Provider<T>) component).provide(null) : (T) component;
 	}
 	
 	/**
@@ -352,7 +353,7 @@ public class Container {
 				"Parameter 'component' must not be [" + component + "]");
 		
 		if (installed(component)) {
-			logger.debug("Installation ignored: Component [" + component + "] has already been installed");
+			logger.debug("Installation ignored: Provider [" + component + "] has already been installed");
 			return;
 		}
 		
@@ -360,7 +361,7 @@ public class Container {
 		
 		if (component.isInterface() || Modifier.isAbstract(modifiers) || !Modifier.isPublic(modifiers)) {
 			logger.warn("Interface, abstract and non-public class cannot be installed: " 
-					+ "Component [" + component + "]");
+					+ "Provider [" + component + "]");
 			return;
 		}
 		
@@ -368,11 +369,11 @@ public class Container {
 			Descriptor<T> descriptor = new Descriptor<T>(component);
 			List<Class<?>> classes = Collections.emptyList();
 			
-			if (Component.class.isAssignableFrom(component)) {
+			if (Provider.class.isAssignableFrom(component)) {
 				Type type = component.getGenericSuperclass();
 				
 				for (Class<?> superclass = component.getSuperclass(); 
-						!superclass.equals(Component.class); superclass = superclass.getSuperclass()) {
+						!superclass.equals(Provider.class); superclass = superclass.getSuperclass()) {
 					if (type instanceof ParameterizedType) {
 						type = ((Class<?>) ((ParameterizedType) type).getRawType()).getGenericSuperclass();
 					} else {
@@ -398,11 +399,11 @@ public class Container {
 				components.put(type, descriptor);
 			}
 			
-			ListMultimap<Annotation, Descriptor<?>> interceptors = ArrayListMultimap.create();
+			ListMultimap<Annotation, Descriptor<?>> pointcuts = ArrayListMultimap.create();
 			
-			if (descriptor.interceptor()) {
-				for (Annotation intercept : descriptor.intercepts()) {
-					interceptors.put(intercept, descriptor);
+			if (descriptor.aspect()) {
+				for (Annotation pointcut : descriptor.pointcuts()) {
+					pointcuts.put(pointcut, descriptor);
 				}
 			}
 			
@@ -415,10 +416,10 @@ public class Container {
 			
 			installed.add(component);
 			this.components.putAll(components);
-			this.interceptors.putAll(interceptors);
-			logger.info("Component has been installed: Component descriptor [" + descriptor + "]");
+			this.pointcuts.putAll(pointcuts);
+			logger.info("Provider has been installed: Provider descriptor [" + descriptor + "]");
 		} catch (Exception e) {
-			logger.warn("Component cannot be installed: Component type [" + component + "]", e);
+			logger.warn("Provider cannot be installed: Provider type [" + component + "]", e);
 			return;
 		}
 	}
@@ -443,7 +444,7 @@ public class Container {
 	public void dispose() {
 		singleton.clear();
 		components.clear();
-		interceptors.clear();
+		pointcuts.clear();
 		contexts.clear();
 		instances.clear();
 	}
@@ -479,14 +480,14 @@ public class Container {
 	}
 	
 	/**
-	 * Returns intercept annotation-{@link Descriptor} map the container 
+	 * Returns pointcut annotation-{@link Descriptor} map the container 
 	 * manages.
 	 * 
-	 * @return The intercept annotation-{@link Descriptor} map the container 
+	 * @return The pointcut annotation-{@link Descriptor} map the container 
 	 * manages.
 	 */
-	public ListMultimap<Annotation, Descriptor<?>> interceptors() {
-		return interceptors;
+	public ListMultimap<Annotation, Descriptor<?>> pointcuts() {
+		return pointcuts;
 	}
 	
 }

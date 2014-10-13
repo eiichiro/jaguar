@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Eiichiro Uchiumi. All Rights Reserved.
+ * Copyright (C) 2011-2014 Eiichiro Uchiumi. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eiichiro.jaguar.aspect.Advice;
+import org.eiichiro.jaguar.aspect.Pointcut;
+import org.eiichiro.jaguar.aspect.Aspect;
 import org.eiichiro.jaguar.deployment.Deployment;
 import org.eiichiro.jaguar.inject.Binding;
+import org.eiichiro.jaguar.inject.Provider;
 import org.eiichiro.jaguar.inject.Inject;
-import org.eiichiro.jaguar.interceptor.Advice;
-import org.eiichiro.jaguar.interceptor.Intercept;
-import org.eiichiro.jaguar.interceptor.Interceptor;
 import org.eiichiro.jaguar.lifecycle.Lifecycle;
 import org.eiichiro.jaguar.scope.Scope;
 import org.eiichiro.jaguar.validation.Constraint;
@@ -55,7 +56,7 @@ public class Descriptor<T> implements Serializable {
 	
 	private final boolean component;
 	
-	private final boolean interceptor;
+	private final boolean aspect;
 	
 	private Set<Class<? extends Annotation>> deployments = new HashSet<Class<? extends Annotation>>();
 	
@@ -73,7 +74,7 @@ public class Descriptor<T> implements Serializable {
 	
 	private Multimap<Class<? extends Annotation>, Method> lifecycles = HashMultimap.create();
 	
-	private Set<Annotation> intercepts = new HashSet<Annotation>();
+	private Set<Annotation> pointcuts = new HashSet<Annotation>();
 	
 	private Set<Field> validates = new HashSet<Field>();
 	
@@ -82,8 +83,8 @@ public class Descriptor<T> implements Serializable {
 	/**
 	 * Constructs a new {@code Descriptor} with the specified component class.
 	 * NOTE: Joinpoints are ignored if the specified component is a subclass of 
-	 * {@link Component} and advises are ignored if the specified component is 
-	 * not an interceptor.
+	 * {@link Provider} and advises are ignored if the specified component is 
+	 * not an aspect.
 	 * 
 	 * @param type The component class.
 	 * @throws ConfigurationException If the specified component class is 
@@ -94,8 +95,8 @@ public class Descriptor<T> implements Serializable {
 	public Descriptor(Class<T> type) {
 		Preconditions.checkArgument(type != null, "Parameter 'type' must not be [" + type + "]");
 		this.type = type;
-		component = Component.class.isAssignableFrom(type);
-		interceptor = type.isAnnotationPresent(Interceptor.class);
+		component = Provider.class.isAssignableFrom(type);
+		aspect = type.isAnnotationPresent(Aspect.class);
 		Function<Annotation[], Void> annotations = new Function<Annotation[], Void>() {
 			
 			public Void apply(Annotation[] annotations) {
@@ -110,14 +111,14 @@ public class Descriptor<T> implements Serializable {
 						bindings.add(annotation);
 					} else if (annotationType.isAnnotationPresent(Constraint.class)) {
 						constraints.add(annotation);
-					} else if (interceptor && annotationType.isAnnotationPresent(Intercept.class)) {
-						intercepts.add(annotation);
+					} else if (aspect && annotationType.isAnnotationPresent(Pointcut.class)) {
+						pointcuts.add(annotation);
 					} else if (annotationType.isAnnotationPresent(Scope.class)) {
 						if (scope == null || scope.equals(annotation)) {
 							scope = annotation;
 						} else {
 							throw new ConfigurationException(
-									"Component must not be annotated with multiple scope qualifiers: ["
+									"Provider must not be annotated with multiple scope qualifiers: ["
 											+ scope + "] and [" + annotation
 											+ "]");
 						}
@@ -136,7 +137,7 @@ public class Descriptor<T> implements Serializable {
 					this.constructor = (Constructor<T>) constructor;
 				} else {
 					throw new ConfigurationException(
-							"Component must not be annotated with @Inject on multiple constructors");
+							"Provider must not be annotated with @Inject on multiple constructors");
 				}
 			}
 		}
@@ -178,12 +179,12 @@ public class Descriptor<T> implements Serializable {
 				Class<? extends Annotation> annotationType = annotation.annotationType();
 				
 				if (!component) {
-					if (annotationType.isAnnotationPresent(Intercept.class)) {
+					if (annotationType.isAnnotationPresent(Pointcut.class)) {
 						joinpoints.add(method);
 					}
 				}
 				
-				if (interceptor) {
+				if (aspect) {
 					if (annotationType.isAnnotationPresent(Advice.class)) {
 						advices.put(annotationType, method);
 					}
@@ -206,12 +207,12 @@ public class Descriptor<T> implements Serializable {
 	}
 
 	/**
-	 * Returns if the component is an interceptor.
+	 * Returns if the component is an aspect.
 	 * 
-	 * @return If the component is an interceptor.
+	 * @return If the component is an aspect.
 	 */
-	public boolean interceptor() {
-		return interceptor;
+	public boolean aspect() {
+		return aspect;
 	}
 	
 	/**
@@ -296,20 +297,20 @@ public class Descriptor<T> implements Serializable {
 	}
 	
 	/**
-	 * Returns the intercept annotations the component is qualified.
+	 * Returns the pointcut annotations the component is qualified.
 	 * 
-	 * @return The intercept annotations the component is qualified.
+	 * @return The pointcut annotations the component is qualified.
 	 */
-	public Set<Annotation> intercepts() {
-		return intercepts;
+	public Set<Annotation> pointcuts() {
+		return pointcuts;
 	}
 	
 	/**
 	 * Returns {@link Advice} class and corresponding methods to be executed in 
-	 * interceptor.
+	 * aspect.
 	 * 
 	 * @return {@link Advice} class and corresponding methods to be executed in 
-	 * interceptor
+	 * aspect.
 	 */
 	public ListMultimap<Class<? extends Annotation>, Method> advices() {
 		return advices;
@@ -322,8 +323,8 @@ public class Descriptor<T> implements Serializable {
 				+ ", bindings: " + bindings + ", constraints: " + constraints + ", constructor: " + constructor
 				+ ", injects: " + injects + ((!component) ? ", joinpoints: " + joinpoints : "") 
 				+ ", lifecycles: " + lifecycles + ", validates: " + validates 
-				+ ((interceptor) ? ", intercepts: " + intercepts : "")
-				+ ((interceptor) ? ", advices: " + advices : "");
+				+ ((aspect) ? ", pointcuts: " + pointcuts : "")
+				+ ((aspect) ? ", advices: " + advices : "");
 	}
 	
 }
