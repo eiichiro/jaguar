@@ -40,11 +40,11 @@ public class DescriptorTest {
 	}
 
 	@Test
-	public void testAaspect() {
+	public void testAspect() {
 		assertFalse(new Descriptor<DescriptorComponent>(DescriptorComponent.class).aspect());
 		assertFalse(new Descriptor<DescriptorProvider>(DescriptorProvider.class).aspect());
-		assertTrue(new Descriptor<DescriptorInterceptor>(DescriptorInterceptor.class).aspect());
-		assertTrue(new Descriptor<DescriptorInterceptorProvider>(DescriptorInterceptorProvider.class).aspect());
+		assertTrue(new Descriptor<DescriptorAspect>(DescriptorAspect.class).aspect());
+		assertTrue(new Descriptor<DescriptorAspectProvider>(DescriptorAspectProvider.class).aspect());
 	}
 
 	@Test
@@ -180,14 +180,14 @@ public class DescriptorTest {
 		assertTrue(intercepts.isEmpty());
 		intercepts = new Descriptor<DescriptorComponent3>(DescriptorComponent3.class).pointcuts();
 		assertTrue(intercepts.isEmpty());
-		intercepts = new Descriptor<DescriptorInterceptor>(DescriptorInterceptor.class).pointcuts();
+		intercepts = new Descriptor<DescriptorAspect>(DescriptorAspect.class).pointcuts();
 		assertThat(intercepts.size(), is(1));
-		assertThat(intercepts.toArray(new Annotation[1])[0].annotationType(), is((Object) DescriptorIntercept.class));
+		assertThat(intercepts.toArray(new Annotation[1])[0].annotationType(), is((Object) DescriptorPointcut.class));
 		intercepts = new Descriptor<DescriptorProvider>(DescriptorProvider.class).pointcuts();
 		assertTrue(intercepts.isEmpty());
-		intercepts = new Descriptor<DescriptorInterceptorProvider>(DescriptorInterceptorProvider.class).pointcuts();
+		intercepts = new Descriptor<DescriptorAspectProvider>(DescriptorAspectProvider.class).pointcuts();
 		assertThat(intercepts.size(), is(1));
-		assertThat(intercepts.toArray(new Annotation[1])[0].annotationType(), is((Object) DescriptorIntercept.class));
+		assertThat(intercepts.toArray(new Annotation[1])[0].annotationType(), is((Object) DescriptorPointcut.class));
 	}
 
 	@Test
@@ -196,14 +196,14 @@ public class DescriptorTest {
 		assertTrue(advices.values().isEmpty());
 		advices = new Descriptor<DescriptorComponent2>(DescriptorComponent2.class).advices();
 		assertTrue(advices.values().isEmpty());
-		advices = new Descriptor<DescriptorInterceptor>(DescriptorInterceptor.class).advices();
+		advices = new Descriptor<DescriptorAspect>(DescriptorAspect.class).advices();
 		assertThat(advices.values().size(), is(1));
-		assertThat(advices.values().toArray(new Method[1])[0], is(DescriptorInterceptor.class.getDeclaredMethod("advice")));
+		assertThat(advices.values().toArray(new Method[1])[0], is(DescriptorAspect.class.getDeclaredMethod("advice")));
 		advices = new Descriptor<DescriptorProvider>(DescriptorProvider.class).advices();
 		assertTrue(advices.values().isEmpty());
-		advices = new Descriptor<DescriptorInterceptorProvider>(DescriptorInterceptorProvider.class).advices();
+		advices = new Descriptor<DescriptorAspectProvider>(DescriptorAspectProvider.class).advices();
 		assertThat(advices.values().size(), is(1));
-		assertThat(advices.values().toArray(new Method[1])[0], is(DescriptorInterceptorProvider.class.getDeclaredMethod("advice")));
+		assertThat(advices.values().toArray(new Method[1])[0], is(DescriptorAspectProvider.class.getDeclaredMethod("advice")));
 	}
 
 	@Test
@@ -229,12 +229,12 @@ public class DescriptorTest {
 				"type: class org.eiichiro.jaguar.DescriptorComponent3, " +
 				"deployments: [], scope: null, bindings: [], constraints: [], constructor: null, injects: [], " +
 				"joinpoints: [], lifecycles: {}, validates: []"));
-		assertThat(new Descriptor<DescriptorInterceptor>(DescriptorInterceptor.class).toString(), is(
-				"type: class org.eiichiro.jaguar.DescriptorInterceptor, " +
+		assertThat(new Descriptor<DescriptorAspect>(DescriptorAspect.class).toString(), is(
+				"type: class org.eiichiro.jaguar.DescriptorAspect, " +
 				"deployments: [], scope: null, bindings: [], constraints: [], constructor: null, injects: [], " +
 				"joinpoints: [], lifecycles: {}, validates: [], " +
-				"pointcuts: [@org.eiichiro.jaguar.DescriptorIntercept()], " +
-				"advices: {interface org.eiichiro.jaguar.aspect.Before=[public void org.eiichiro.jaguar.DescriptorInterceptor.advice()]}"));
+				"pointcuts: [@org.eiichiro.jaguar.DescriptorPointcut()], " +
+				"advices: {interface org.eiichiro.jaguar.aspect.Before=[public void org.eiichiro.jaguar.DescriptorAspect.advice()]}"));
 		assertThat(new Descriptor<DescriptorProvider>(DescriptorProvider.class).toString(), is(
 				"type: class org.eiichiro.jaguar.DescriptorProvider, " +
 				"deployments: [interface org.eiichiro.jaguar.deployment.Production], " +
@@ -244,17 +244,17 @@ public class DescriptorTest {
 				"injects: [java.lang.Object org.eiichiro.jaguar.DescriptorProvider.object], " +
 				"lifecycles: {interface org.eiichiro.jaguar.lifecycle.Constructed=[public void org.eiichiro.jaguar.DescriptorProvider.lifecycle()]}, " +
 				"validates: [java.lang.Object org.eiichiro.jaguar.DescriptorProvider.object2]"));
-		assertThat(new Descriptor<DescriptorInterceptorProvider>(DescriptorInterceptorProvider.class).toString(), is(
-				"type: class org.eiichiro.jaguar.DescriptorInterceptorProvider, " +
+		assertThat(new Descriptor<DescriptorAspectProvider>(DescriptorAspectProvider.class).toString(), is(
+				"type: class org.eiichiro.jaguar.DescriptorAspectProvider, " +
 				"deployments: [interface org.eiichiro.jaguar.deployment.Production], " +
 				"scope: @org.eiichiro.jaguar.scope.Singleton(eager=false), " +
 				"bindings: [@org.eiichiro.jaguar.DescriptorBinding()], " +
 				"constraints: [@org.eiichiro.jaguar.DescriptorConstraint()], constructor: null, " +
-				"injects: [java.lang.Object org.eiichiro.jaguar.DescriptorInterceptorProvider.object], " +
-				"lifecycles: {interface org.eiichiro.jaguar.lifecycle.Constructed=[public void org.eiichiro.jaguar.DescriptorInterceptorProvider.lifecycle()]}, " +
-				"validates: [java.lang.Object org.eiichiro.jaguar.DescriptorInterceptorProvider.object2], " +
-				"pointcuts: [@org.eiichiro.jaguar.DescriptorIntercept()], " +
-				"advices: {interface org.eiichiro.jaguar.aspect.Before=[public void org.eiichiro.jaguar.DescriptorInterceptorProvider.advice()]}"));
+				"injects: [java.lang.Object org.eiichiro.jaguar.DescriptorAspectProvider.object], " +
+				"lifecycles: {interface org.eiichiro.jaguar.lifecycle.Constructed=[public void org.eiichiro.jaguar.DescriptorAspectProvider.lifecycle()]}, " +
+				"validates: [java.lang.Object org.eiichiro.jaguar.DescriptorAspectProvider.object2], " +
+				"pointcuts: [@org.eiichiro.jaguar.DescriptorPointcut()], " +
+				"advices: {interface org.eiichiro.jaguar.aspect.Before=[public void org.eiichiro.jaguar.DescriptorAspectProvider.advice()]}"));
 		assertThat(new Descriptor<DescriptorComponent5>(DescriptorComponent5.class).toString(), is(
 				"type: class org.eiichiro.jaguar.DescriptorComponent5, " +
 				"deployments: [], " +

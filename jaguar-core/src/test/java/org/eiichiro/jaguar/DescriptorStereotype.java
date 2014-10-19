@@ -12,7 +12,7 @@ import org.eiichiro.jaguar.scope.Singleton;
 @Singleton
 @DescriptorBinding
 @DescriptorConstraint
-@DescriptorIntercept
+@DescriptorPointcut
 @Stereotype
 public @interface DescriptorStereotype {
 

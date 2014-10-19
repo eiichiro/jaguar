@@ -13,7 +13,7 @@ import org.eiichiro.jaguar.validation.Required;
 @Singleton
 @DescriptorBinding
 @DescriptorConstraint
-@DescriptorIntercept
+@DescriptorPointcut
 public class DescriptorProvider implements Provider<Object> {
 
 	private final Object instance;
@@ -31,7 +31,7 @@ public class DescriptorProvider implements Provider<Object> {
 	public void advice() {}
 	
 	// Ignored.
-	@DescriptorIntercept
+	@DescriptorPointcut
 	public void method() {}
 	
 	@Constructed

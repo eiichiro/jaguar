@@ -11,7 +11,7 @@ import org.eiichiro.jaguar.validation.Required;
 @Singleton
 @DescriptorBinding
 @DescriptorConstraint
-@DescriptorIntercept
+@DescriptorPointcut
 public class DescriptorComponent {
 
 	@Inject Object object;
@@ -22,7 +22,7 @@ public class DescriptorComponent {
 	@Before
 	public void advice() {}
 	
-	@DescriptorIntercept
+	@DescriptorPointcut
 	public void method() {}
 	
 	@Constructed

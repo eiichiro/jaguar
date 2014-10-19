@@ -11,7 +11,7 @@ public class InjectTest {
 	public void test() {
 		bootstrap();
 		install(InjectComponent.class, InjectComponent2.class, InjectComponent3.class,
-				InjectInterceptor.class);
+				InjectAspect.class);
 		InjectComponent injectComponent = component(InjectComponent.class);
 		assertNull(injectComponent.injectComponent2);
 		assertNotNull(injectComponent.injectObject22);
@@ -19,9 +19,9 @@ public class InjectTest {
 		InjectComponent3 injectComponent3 = component(InjectComponent3.class);
 		assertNotNull(injectComponent3.injectComponent2);
 		assertNull(injectComponent3.string);
-		InjectInterceptor injectInterceptor = component(InjectInterceptor.class);
-		assertNotNull(injectInterceptor.injectComponent2);
-		assertNull(injectInterceptor.string);
+		InjectAspect injectAspect = component(InjectAspect.class);
+		assertNotNull(injectAspect.injectComponent2);
+		assertNull(injectAspect.string);
 		shutdown();
 	}
 	
