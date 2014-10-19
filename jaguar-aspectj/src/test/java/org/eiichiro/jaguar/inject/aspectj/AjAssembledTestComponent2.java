@@ -1,5 +1,5 @@
 package org.eiichiro.jaguar.inject.aspectj;
 
-public class AjAssembledTestObject2 {
+public class AjAssembledTestComponent2 {
 
 }

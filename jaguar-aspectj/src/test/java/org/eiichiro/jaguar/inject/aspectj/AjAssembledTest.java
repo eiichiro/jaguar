@@ -10,9 +10,9 @@ public class AjAssembledTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(AjAssembledTestObject2.class);
-		AjAssembledTestObject1 ajAssembledTestObject1 = new AjAssembledTestObject1();
-		assertNotNull(ajAssembledTestObject1.ajAssembledTestObject2);
+		install(AjAssembledTestComponent2.class);
+		AjAssembledTestComponent1 ajAssembledTestComponent1 = new AjAssembledTestComponent1();
+		assertNotNull(ajAssembledTestComponent1.ajAssembledTestComponent2);
 		shutdown();
 	}
 	

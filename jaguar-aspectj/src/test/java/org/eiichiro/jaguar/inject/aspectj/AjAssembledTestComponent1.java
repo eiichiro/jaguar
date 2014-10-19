@@ -4,8 +4,8 @@ import org.eiichiro.jaguar.aspectj.AjAssembled;
 import org.eiichiro.jaguar.inject.Inject;
 
 @AjAssembled
-public class AjAssembledTestObject1 {
+public class AjAssembledTestComponent1 {
 
-	@Inject AjAssembledTestObject2 ajAssembledTestObject2;
+	@Inject AjAssembledTestComponent2 ajAssembledTestComponent2;
 	
 }
