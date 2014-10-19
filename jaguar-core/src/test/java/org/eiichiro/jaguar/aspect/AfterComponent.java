@@ -10,12 +10,12 @@ public class AfterComponent {
 
 	List<String> order = new ArrayList<String>();
 	
-	@AfterIntercept
+	@AfterPointcut
 	public void method1() {
 		order.add("method1");
 	}
 	
-	@AfterIntercept
+	@AfterPointcut
 	public String method2() {
 		order.add("method2");
 		return "after-";

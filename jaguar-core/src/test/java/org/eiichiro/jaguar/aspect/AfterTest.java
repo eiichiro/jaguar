@@ -11,7 +11,7 @@ public class AfterTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(AfterComponent.class, AfterInterceptor1.class);
+		install(AfterComponent.class, AfterAspect1.class);
 		AfterComponent afterComponent = component(AfterComponent.class);
 		afterComponent.method1();
 		assertThat(afterComponent.order.size(), is(3));
@@ -28,7 +28,7 @@ public class AfterTest {
 		shutdown();
 		
 		bootstrap();
-		install(AfterComponent.class, AfterInterceptor2.class);
+		install(AfterComponent.class, AfterAspect2.class);
 		afterComponent = component(AfterComponent.class);
 		afterComponent.method2();
 		assertThat(afterComponent.order.size(), is(2));
@@ -37,7 +37,7 @@ public class AfterTest {
 		shutdown();
 		
 		bootstrap();
-		install(AfterComponent.class, AfterInterceptor3.class);
+		install(AfterComponent.class, AfterAspect3.class);
 		afterComponent = component(AfterComponent.class);
 		
 		try {

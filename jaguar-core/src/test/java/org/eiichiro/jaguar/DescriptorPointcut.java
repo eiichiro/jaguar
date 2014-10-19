@@ -7,6 +7,6 @@ import org.eiichiro.jaguar.aspect.Pointcut;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Pointcut
-public @interface DescriptorIntercept {
+public @interface DescriptorPointcut {
 
 }

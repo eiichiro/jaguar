@@ -10,4 +10,4 @@ import org.eiichiro.jaguar.aspect.Pointcut;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Pointcut
-public @interface Intercept1 {}
+public @interface ThrowingPointcut {}

@@ -10,12 +10,12 @@ public class AroundComponent {
 
 	List<String> order = new ArrayList<String>();
 	
-	@AroundIntercept
+	@AroundPointcut
 	public void method1() {
 		order.add("method1");
 	}
 	
-	@AroundIntercept
+	@AroundPointcut
 	public String method2(String string) {
 		order.add(string + "method2");
 		return string;

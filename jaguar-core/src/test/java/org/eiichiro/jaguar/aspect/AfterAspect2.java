@@ -4,9 +4,9 @@ import org.eiichiro.jaguar.aspect.After;
 import org.eiichiro.jaguar.aspect.Aspect;
 import org.eiichiro.jaguar.inject.Inject;
 
-@AfterIntercept
+@AfterPointcut
 @Aspect
-public class AfterInterceptor2 {
+public class AfterAspect2 {
 
 	@Inject AfterComponent afterComponent;
 	

@@ -26,7 +26,7 @@ import org.eiichiro.jaguar.Stereotype;
 
 /**
  * Built-in {@link Stereotype} to indicate that the component is an aspect.
- * Aspect class must be annotated with this stereotype and intercept 
+ * Aspect class must be annotated with this stereotype and pointcut 
  * annotation to be bound.
  * 
  * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>

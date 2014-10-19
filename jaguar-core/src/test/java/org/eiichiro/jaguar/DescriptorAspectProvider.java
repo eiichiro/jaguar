@@ -14,13 +14,13 @@ import org.eiichiro.jaguar.validation.Required;
 @Singleton
 @DescriptorBinding
 @DescriptorConstraint
-@DescriptorIntercept
+@DescriptorPointcut
 @Aspect
-public class DescriptorInterceptorProvider implements Provider<Object> {
+public class DescriptorAspectProvider implements Provider<Object> {
 
 	private final Object instance;
 	
-	public DescriptorInterceptorProvider() {
+	public DescriptorAspectProvider() {
 		instance = new Object();
 	}
 	
@@ -32,7 +32,7 @@ public class DescriptorInterceptorProvider implements Provider<Object> {
 	public void advice() {}
 	
 	// Ignored.
-	@DescriptorIntercept
+	@DescriptorPointcut
 	public void method() {}
 	
 	@Constructed

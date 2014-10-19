@@ -4,15 +4,15 @@ import org.eiichiro.jaguar.aspect.Before;
 import org.eiichiro.jaguar.aspect.Aspect;
 import org.eiichiro.jaguar.inject.Inject;
 
+@BeforePointcut
 @Aspect
-@Intercept1
-public class Interceptor3 {
+public class BeforeAspect2 {
 
-	@Inject Component1 component1;
+	@Inject BeforeComponent beforeComponent;
 	
 	@Before
-	public void before3() {
-		component1.order.add("before3");
+	public void before1(String string) {
+		beforeComponent.order.add(string + "before1");
 	}
 	
 }

@@ -12,7 +12,7 @@ public class ThrowingTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(ThrowingComponent.class, ThrowingInterceptor1.class);
+		install(ThrowingComponent.class, ThrowingAspect1.class);
 		ThrowingComponent throwingComponent = component(ThrowingComponent.class);
 		throwingComponent.method1();
 		assertThat(throwingComponent.order.size(), is(3));
@@ -22,7 +22,7 @@ public class ThrowingTest {
 		shutdown();
 		
 		bootstrap();
-		install(ThrowingComponent.class, ThrowingInterceptor2.class);
+		install(ThrowingComponent.class, ThrowingAspect2.class);
 		throwingComponent = component(ThrowingComponent.class);
 		throwingComponent.method1();
 		assertThat(throwingComponent.order.size(), is(2));
@@ -31,7 +31,7 @@ public class ThrowingTest {
 		shutdown();
 		
 		bootstrap();
-		install(ThrowingComponent.class, ThrowingInterceptor3.class);
+		install(ThrowingComponent.class, ThrowingAspect3.class);
 		throwingComponent = component(ThrowingComponent.class);
 		
 		try {

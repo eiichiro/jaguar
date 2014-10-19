@@ -11,7 +11,7 @@ public class BeforeTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(BeforeComponent.class, BeforeInterceptor1.class);
+		install(BeforeComponent.class, BeforeAspect1.class);
 		BeforeComponent beforeComponent = component(BeforeComponent.class);
 		beforeComponent.method1();
 		assertThat(beforeComponent.order.size(), is(3));
@@ -21,13 +21,13 @@ public class BeforeTest {
 		shutdown();
 		
 		bootstrap();
-		install(BeforeComponent.class, BeforeInterceptor1.class);
+		install(BeforeComponent.class, BeforeAspect1.class);
 		beforeComponent = component(BeforeComponent.class);
 		beforeComponent.method2("before-");
 		shutdown();
 		
 		bootstrap();
-		install(BeforeComponent.class, BeforeInterceptor2.class);
+		install(BeforeComponent.class, BeforeAspect2.class);
 		beforeComponent = component(BeforeComponent.class);
 		beforeComponent.method2("before-");
 		assertThat(beforeComponent.order.size(), is(2));
@@ -36,7 +36,7 @@ public class BeforeTest {
 		shutdown();
 		
 		bootstrap();
-		install(BeforeComponent.class, BeforeInterceptor3.class);
+		install(BeforeComponent.class, BeforeAspect3.class);
 		beforeComponent = component(BeforeComponent.class);
 		
 		try {

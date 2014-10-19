@@ -10,12 +10,12 @@ public class BeforeComponent {
 
 	List<String> order = new ArrayList<String>();
 	
-	@BeforeIntercept
+	@BeforePointcut
 	public void method1() {
 		order.add("method1");
 	}
 	
-	@BeforeIntercept
+	@BeforePointcut
 	public void method2(String string) {
 		order.add(string + "method2");
 	}

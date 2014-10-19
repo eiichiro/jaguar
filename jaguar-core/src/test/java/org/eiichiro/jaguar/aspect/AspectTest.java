@@ -6,12 +6,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class InterceptorTest {
+public class AspectTest {
 
 	@Test
 	public void test() {
 		bootstrap();
-		install(Component1.class, Interceptor4.class);
+		install(Component1.class, Aspect4.class);
 		Component1 component1 = component(Component1.class);
 		component1.method1();
 		component1.method2();

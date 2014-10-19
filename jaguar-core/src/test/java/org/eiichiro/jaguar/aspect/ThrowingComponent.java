@@ -10,7 +10,7 @@ public class ThrowingComponent {
 
 	List<String> order = new ArrayList<String>();
 	
-	@ThrowingIntercept
+	@ThrowingPointcut
 	public void method1() {
 		order.add("method1");
 		throw new RuntimeException("exception-");

@@ -12,7 +12,7 @@ public class AroundTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(AroundComponent.class, AroundInterceptor1.class);
+		install(AroundComponent.class, AroundAspect1.class);
 		AroundComponent aroundComponent = component(AroundComponent.class);
 		aroundComponent.method1();
 		assertThat(aroundComponent.order.size(), is(5));
@@ -34,7 +34,7 @@ public class AroundTest {
 		shutdown();
 		
 		bootstrap();
-		install(AroundComponent.class, AroundInterceptor2.class);
+		install(AroundComponent.class, AroundAspect2.class);
 		aroundComponent = component(AroundComponent.class);
 		String string = aroundComponent.method2("around-");
 		assertThat(aroundComponent.order.size(), is(3));
@@ -45,7 +45,7 @@ public class AroundTest {
 		shutdown();
 		
 		bootstrap();
-		install(AroundComponent.class, AroundInterceptor3.class);
+		install(AroundComponent.class, AroundAspect3.class);
 		aroundComponent = component(AroundComponent.class);
 		string = aroundComponent.method2("around-");
 		assertThat(aroundComponent.order.size(), is(1));
@@ -54,7 +54,7 @@ public class AroundTest {
 		shutdown();
 		
 		bootstrap();
-		install(AroundComponent.class, AroundInterceptor4.class);
+		install(AroundComponent.class, AroundAspect4.class);
 		aroundComponent = component(AroundComponent.class);
 		
 		try {
@@ -67,7 +67,7 @@ public class AroundTest {
 		shutdown();
 		
 		bootstrap();
-		install(AroundComponent.class, AroundInterceptor5.class);
+		install(AroundComponent.class, AroundAspect5.class);
 		aroundComponent = component(AroundComponent.class);
 		
 		try {

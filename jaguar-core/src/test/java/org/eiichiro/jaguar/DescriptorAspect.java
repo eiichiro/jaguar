@@ -3,9 +3,9 @@ package org.eiichiro.jaguar;
 import org.eiichiro.jaguar.aspect.Before;
 import org.eiichiro.jaguar.aspect.Aspect;
 
-@DescriptorIntercept
+@DescriptorPointcut
 @Aspect
-public class DescriptorInterceptor {
+public class DescriptorAspect {
 
 	@Before
 	public void advice() {}

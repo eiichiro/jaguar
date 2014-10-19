@@ -4,9 +4,9 @@ import org.eiichiro.jaguar.aspect.Aspect;
 import org.eiichiro.jaguar.aspect.Throwing;
 import org.eiichiro.jaguar.inject.Inject;
 
-@ThrowingIntercept
+@ThrowingPointcut
 @Aspect
-public class ThrowingInterceptor1 {
+public class ThrowingAspect1 {
 
 	@Inject ThrowingComponent throwingComponent;
 	

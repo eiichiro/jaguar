@@ -5,9 +5,9 @@ import org.eiichiro.jaguar.aspect.Aspect;
 import org.eiichiro.jaguar.inject.Inject;
 import org.eiichiro.reverb.reflection.Invocation;
 
-@AroundIntercept
+@AroundPointcut
 @Aspect
-public class AroundInterceptor2 {
+public class AroundAspect2 {
 
 	@Inject AroundComponent aroundComponent;
 	
