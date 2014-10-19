@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
 public @interface Name {
 
 	/**
-	 * Component name. Must not be <code>null</code>.
+	 * Provider name. Must not be <code>null</code>.
 	 * 
 	 * @return The component name.
 	 */
