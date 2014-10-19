@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eiichiro.jaguar.aspectj;
+package org.eiichiro.jaguar.inject.aspectj;
 
 import static org.eiichiro.jaguar.Jaguar.*;
 

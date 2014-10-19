@@ -1,4 +1,4 @@
-package org.eiichiro.jaguar.aspectj;
+package org.eiichiro.jaguar.inject.aspectj;
 
 import org.eiichiro.jaguar.aspectj.AjAssembled;
 import org.eiichiro.jaguar.inject.Inject;

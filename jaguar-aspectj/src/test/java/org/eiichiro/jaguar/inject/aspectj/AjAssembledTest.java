@@ -1,4 +1,4 @@
-package org.eiichiro.jaguar.aspectj;
+package org.eiichiro.jaguar.inject.aspectj;
 
 import static org.eiichiro.jaguar.Jaguar.*;
 import static org.junit.Assert.*;
