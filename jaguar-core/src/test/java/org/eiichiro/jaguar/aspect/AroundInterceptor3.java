@@ -9,11 +9,11 @@ import org.eiichiro.reverb.reflection.Invocation;
 @Aspect
 public class AroundInterceptor3 {
 
-	@Inject AroundObject aroundObject;
+	@Inject AroundComponent aroundComponent;
 	
 	@Around
 	public String around1(Invocation<String> invocation) throws Throwable {
-		aroundObject.order.add("around1");
+		aroundComponent.order.add("around1");
 		return "around1";
 	}
 	

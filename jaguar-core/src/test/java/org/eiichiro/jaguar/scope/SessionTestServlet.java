@@ -21,13 +21,13 @@ public class SessionTestServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		install(SessionObject.class);
-		SessionObject sessionObject = component(SessionObject.class);
-		SessionObject sessionObject2 = component(SessionObject.class);
-		assertSame(sessionObject, sessionObject2);
+		install(SessionComponent.class);
+		SessionComponent sessionComponent = component(SessionComponent.class);
+		SessionComponent sessionObject2 = component(SessionComponent.class);
+		assertSame(sessionComponent, sessionObject2);
 		Map<Descriptor<?>, Object> components = (Map<Descriptor<?>, Object>) request.getSession().getAttribute(WebContext.COMPONENTS);
 		assertNotNull(components);
 		Object component = components.get(components.keySet().toArray()[0]);
-		assertSame(sessionObject, component);
+		assertSame(sessionComponent, component);
 	}
 }

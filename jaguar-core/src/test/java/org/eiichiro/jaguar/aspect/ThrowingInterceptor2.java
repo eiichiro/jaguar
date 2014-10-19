@@ -8,11 +8,11 @@ import org.eiichiro.jaguar.inject.Inject;
 @Aspect
 public class ThrowingInterceptor2 {
 
-	@Inject ThrowingObject throwingObject;
+	@Inject ThrowingComponent throwingComponent;
 	
 	@Throwing
 	public void throwing1(Exception exception) {
-		throwingObject.order.add(exception.getMessage() + "throwing1");
+		throwingComponent.order.add(exception.getMessage() + "throwing1");
 	}
 	
 }

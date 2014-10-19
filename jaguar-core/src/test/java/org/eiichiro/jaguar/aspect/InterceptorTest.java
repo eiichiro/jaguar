@@ -11,15 +11,15 @@ public class InterceptorTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(Object1.class, Interceptor4.class);
-		Object1 object1 = component(Object1.class);
-		object1.method1();
-		object1.method2();
-		assertThat(object1.order.size(), is(4));
-		assertThat(object1.order.get(0), is("before4"));
-		assertThat(object1.order.get(1), is("method1"));
-		assertThat(object1.order.get(2), is("before4"));
-		assertThat(object1.order.get(3), is("method2"));
+		install(Component1.class, Interceptor4.class);
+		Component1 component1 = component(Component1.class);
+		component1.method1();
+		component1.method2();
+		assertThat(component1.order.size(), is(4));
+		assertThat(component1.order.get(0), is("before4"));
+		assertThat(component1.order.get(1), is("method1"));
+		assertThat(component1.order.get(2), is("before4"));
+		assertThat(component1.order.get(3), is("method2"));
 		shutdown();
 	}
 	

@@ -8,12 +8,12 @@ import org.eiichiro.jaguar.inject.Inject;
 @Aspect
 public class BeforeInterceptor3 {
 
-	@Inject BeforeObject beforeObject;
+	@Inject BeforeComponent beforeComponent;
 	
 	@Before
-	public void before1(BeforeObject beforeObject) {
+	public void before1(BeforeComponent beforeComponent) {
 		// Always fail -> parameter type & number is different from intercepted method.
-		beforeObject.order.add(beforeObject + "before1");
+		beforeComponent.order.add(beforeComponent + "before1");
 	}
 	
 }

@@ -13,23 +13,23 @@ public class ConstraintTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(Object4.class, Object5.class, Object6.class);
-		component(Object4.class);
+		install(Component4.class, Component5.class, Component6.class);
+		component(Component4.class);
 		
 		try {
-			component(Object5.class);
+			component(Component5.class);
 			fail();
 		} catch (ViolationException e) {
 			e.printStackTrace();
 			assertThat(e.getMessage(), is(
 					"Constraint violation: Field [java.lang.String " 
-					+ "org.eiichiro.jaguar.validation.Object5.string]" 
+					+ "org.eiichiro.jaguar.validation.Component5.string]" 
 					+ "'s value [] is invalid for " 
 					+ "[@org.eiichiro.jaguar.validation.Constraint1()] constraint"));
 		}
 		
 		try {
-			component(Object6.class);
+			component(Component6.class);
 			fail();
 		} catch (ConfigurationException e) {
 			e.printStackTrace();

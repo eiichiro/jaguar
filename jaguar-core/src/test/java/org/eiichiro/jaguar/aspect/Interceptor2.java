@@ -8,11 +8,11 @@ import org.eiichiro.jaguar.inject.Inject;
 @Intercept2
 public class Interceptor2 {
 
-	@Inject Object1 object1;
+	@Inject Component1 component1;
 	
 	@Before
 	public void before2() {
-		object1.order.add("before2");
+		component1.order.add("before2");
 	}
 	
 }

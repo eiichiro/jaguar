@@ -3,10 +3,10 @@ package org.eiichiro.jaguar;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import org.eiichiro.jaguar.interceptor.Intercept;
+import org.eiichiro.jaguar.aspect.Pointcut;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Intercept
+@Pointcut
 public @interface DescriptorIntercept {
 
 }

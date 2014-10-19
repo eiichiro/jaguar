@@ -8,16 +8,16 @@ import org.eiichiro.jaguar.inject.Inject;
 @Aspect
 public class BeforeInterceptor1 {
 
-	@Inject BeforeObject beforeObject;
+	@Inject BeforeComponent beforeComponent;
 	
 	@Before
 	public void before1() {
-		beforeObject.order.add("before1");
+		beforeComponent.order.add("before1");
 	}
 	
 	@Before
 	public void before2() {
-		beforeObject.order.add("before2");
+		beforeComponent.order.add("before2");
 	}
 	
 }

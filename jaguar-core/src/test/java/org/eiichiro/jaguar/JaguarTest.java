@@ -47,8 +47,8 @@ public class JaguarTest {
 	public void testInstallSetOfClassOfQ() {
 		bootstrap();
 		Set<Class<?>> classes = new HashSet<Class<?>>();
-		classes.add(Object1.class);
-		classes.add(Object2.class);
+		classes.add(Component1.class);
+		classes.add(Component2.class);
 		install(classes);
 		shutdown();
 	}
@@ -56,68 +56,68 @@ public class JaguarTest {
 	@Test
 	public void testInstallClassOfQArray() {
 		bootstrap();
-		install(Object1.class, Object2.class);
+		install(Component1.class, Component2.class);
 		shutdown();
 	}
 
 	@Test
 	public void testInstallClassOfQ() {
 		try {
-			install(Object1.class);
+			install(Component1.class);
 			fail();
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		}
 		
 		bootstrap();
-		install(Object1.class);
-		install(Object2.class);
+		install(Component1.class);
+		install(Component2.class);
 		shutdown();
 		
 		bootstrap();
-		install(Object4.class);
-		Object4 object4 = component(Object4.class);
-		install(Object4.class);
-		assertSame(object4, component(Object4.class));
+		install(Component4.class);
+		Component4 component4 = component(Component4.class);
+		install(Component4.class);
+		assertSame(component4, component(Component4.class));
 		shutdown();
 	}
 
 	@Test
 	public void testInstalled() {
 		try {
-			installed(Object1.class);
+			installed(Component1.class);
 			fail();
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		}
 		
 		bootstrap();
-		assertFalse(installed(Object1.class));
-		install(Object1.class);
-		assertTrue(installed(Object1.class));
+		assertFalse(installed(Component1.class));
+		install(Component1.class);
+		assertTrue(installed(Component1.class));
 		shutdown();
 	}
 
 	@Test
 	public void testComponent() {
 		bootstrap();
-		install(Object1.class);
-		install(Object2.class);
-		Object2 object2 = component(Object2.class);
-		assertNotNull(object2.object1);
+		install(Component1.class);
+		install(Component2.class);
+		Component2 component2 = component(Component2.class);
+		assertNotNull(component2.component1);
 		shutdown();
 	}
 
 	@Test
 	public void testAssemble() {
 		bootstrap();
-		install(Object1.class);
-		install(Object2.class);
-		Object3 object3 = Object3.object3();
-		Object3 object32 = assemble(object3);
-		assertSame(object3, object32);
-		assertNotNull(object32.object2);
-		assertNotNull(object32.object2.object1);
+		install(Component1.class);
+		install(Component2.class);
+		Component3 component3 = Component3.component3();
+		Component3 object32 = assemble(component3);
+		assertSame(component3, object32);
+		assertNotNull(object32.component2);
+		assertNotNull(object32.component2.component1);
 		shutdown();
 	}
 	
@@ -126,8 +126,8 @@ public class JaguarTest {
 		dump();
 		bootstrap();
 		dump();
-		install(Object1.class);
-		install(Object2.class);
+		install(Component1.class);
+		install(Component2.class);
 		dump();
 		shutdown();
 		dump();

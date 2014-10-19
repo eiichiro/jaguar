@@ -8,9 +8,9 @@ import org.eiichiro.jaguar.inject.Inject;
 @Aspect
 public class AroundInterceptor5 {
 
-	@Inject AroundObject aroundObject;
+	@Inject AroundComponent aroundComponent;
 	
 	@Around
-	public void around1(AroundObject aroundObject) {}
+	public void around1(AroundComponent aroundComponent) {}
 	
 }

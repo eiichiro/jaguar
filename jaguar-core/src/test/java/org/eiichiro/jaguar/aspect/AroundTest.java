@@ -12,21 +12,21 @@ public class AroundTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(AroundObject.class, AroundInterceptor1.class);
-		AroundObject aroundObject = component(AroundObject.class);
-		aroundObject.method1();
-		assertThat(aroundObject.order.size(), is(5));
+		install(AroundComponent.class, AroundInterceptor1.class);
+		AroundComponent aroundComponent = component(AroundComponent.class);
+		aroundComponent.method1();
+		assertThat(aroundComponent.order.size(), is(5));
 		
-		if (aroundObject.order.get(0).equals("before-around1")) {
-			assertThat(aroundObject.order.get(1), is("before-around2"));
-			assertThat(aroundObject.order.get(2), is("method1"));
-			assertThat(aroundObject.order.get(3), is("after-around2"));
-			assertThat(aroundObject.order.get(4), is("after-around1"));
-		} else if (aroundObject.order.get(0).equals("before-around2")) {
-			assertThat(aroundObject.order.get(1), is("before-around1"));
-			assertThat(aroundObject.order.get(2), is("method1"));
-			assertThat(aroundObject.order.get(3), is("after-around1"));
-			assertThat(aroundObject.order.get(4), is("after-around2"));
+		if (aroundComponent.order.get(0).equals("before-around1")) {
+			assertThat(aroundComponent.order.get(1), is("before-around2"));
+			assertThat(aroundComponent.order.get(2), is("method1"));
+			assertThat(aroundComponent.order.get(3), is("after-around2"));
+			assertThat(aroundComponent.order.get(4), is("after-around1"));
+		} else if (aroundComponent.order.get(0).equals("before-around2")) {
+			assertThat(aroundComponent.order.get(1), is("before-around1"));
+			assertThat(aroundComponent.order.get(2), is("method1"));
+			assertThat(aroundComponent.order.get(3), is("after-around1"));
+			assertThat(aroundComponent.order.get(4), is("after-around2"));
 		} else {
 			fail();
 		}
@@ -34,31 +34,31 @@ public class AroundTest {
 		shutdown();
 		
 		bootstrap();
-		install(AroundObject.class, AroundInterceptor2.class);
-		aroundObject = component(AroundObject.class);
-		String string = aroundObject.method2("around-");
-		assertThat(aroundObject.order.size(), is(3));
-		assertThat(aroundObject.order.get(0), is("around-before-around1"));
-		assertThat(aroundObject.order.get(1), is("around-method2"));
-		assertThat(aroundObject.order.get(2), is("around-after-around1"));
+		install(AroundComponent.class, AroundInterceptor2.class);
+		aroundComponent = component(AroundComponent.class);
+		String string = aroundComponent.method2("around-");
+		assertThat(aroundComponent.order.size(), is(3));
+		assertThat(aroundComponent.order.get(0), is("around-before-around1"));
+		assertThat(aroundComponent.order.get(1), is("around-method2"));
+		assertThat(aroundComponent.order.get(2), is("around-after-around1"));
 		assertThat(string, is("around-around1"));
 		shutdown();
 		
 		bootstrap();
-		install(AroundObject.class, AroundInterceptor3.class);
-		aroundObject = component(AroundObject.class);
-		string = aroundObject.method2("around-");
-		assertThat(aroundObject.order.size(), is(1));
-		assertThat(aroundObject.order.get(0), is("around1"));
+		install(AroundComponent.class, AroundInterceptor3.class);
+		aroundComponent = component(AroundComponent.class);
+		string = aroundComponent.method2("around-");
+		assertThat(aroundComponent.order.size(), is(1));
+		assertThat(aroundComponent.order.get(0), is("around1"));
 		assertThat(string, is("around1"));
 		shutdown();
 		
 		bootstrap();
-		install(AroundObject.class, AroundInterceptor4.class);
-		aroundObject = component(AroundObject.class);
+		install(AroundComponent.class, AroundInterceptor4.class);
+		aroundComponent = component(AroundComponent.class);
 		
 		try {
-			aroundObject.method1();
+			aroundComponent.method1();
 			fail();
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
@@ -67,11 +67,11 @@ public class AroundTest {
 		shutdown();
 		
 		bootstrap();
-		install(AroundObject.class, AroundInterceptor5.class);
-		aroundObject = component(AroundObject.class);
+		install(AroundComponent.class, AroundInterceptor5.class);
+		aroundComponent = component(AroundComponent.class);
 		
 		try {
-			aroundObject.method1();
+			aroundComponent.method1();
 			fail();
 		} catch (ConfigurationException e) {
 			e.printStackTrace();

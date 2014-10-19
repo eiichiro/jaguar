@@ -21,13 +21,13 @@ public class ApplicationTestServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		install(ApplicationObject.class);
-		ApplicationObject applicationObject = component(ApplicationObject.class);
-		ApplicationObject applicationObject2 = component(ApplicationObject.class);
-		assertSame(applicationObject, applicationObject2);
+		install(ApplicationComponent.class);
+		ApplicationComponent applicationComponent = component(ApplicationComponent.class);
+		ApplicationComponent applicationObject2 = component(ApplicationComponent.class);
+		assertSame(applicationComponent, applicationObject2);
 		Map<Descriptor<?>, Object> components = (Map<Descriptor<?>, Object>) request.getSession().getServletContext().getAttribute(WebContext.COMPONENTS);
 		assertNotNull(components);
 		Object component = components.get(components.keySet().toArray()[0]);
-		assertSame(applicationObject, component);
+		assertSame(applicationComponent, component);
 	}
 }

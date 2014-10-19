@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Eiichiro Uchiumi. All Rights Reserved.
+ * Copyright (C) 2014 Eiichiro Uchiumi. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@ import javassist.NotFoundException;
 
 import org.eiichiro.jaguar.deployment.Deployment;
 import org.eiichiro.jaguar.inject.Binding;
+import org.eiichiro.jaguar.inject.Provider;
 import org.eiichiro.jaguar.scope.Application;
 import org.eiichiro.jaguar.scope.Scope;
 import org.eiichiro.reverb.lang.ClassResolver;
@@ -140,7 +141,7 @@ public class ClasspathScanner implements Scanner {
 	 * {@code ClasspathScanner} detects the component by the following 
 	 * conditions: 
 	 * <ul>
-	 * <li>Subclass of {@link Component}</li>
+	 * <li>Subclass of {@link Provider}</li>
 	 * <li>Qualified by {@link Stereotype}</li>
 	 * <li>Qualified by {@link Deployment}</li>
 	 * <li>Qualified by {@link Binding}</li>
@@ -168,14 +169,10 @@ public class ClasspathScanner implements Scanner {
 							return false;
 						}
 						
-						CtClass superclass = ctClass.getSuperclass();
-						
-						while (superclass != null) {
-							if (superclass.getName().equals(Component.class.getName())) {
+						for (CtClass i : ctClass.getInterfaces()) {
+							if (i.getName().equals(Provider.class.getName())) {
 								return true;
 							}
-							
-							superclass = superclass.getSuperclass();
 						}
 						
 						for (Object object : ctClass.getAnnotations()) {

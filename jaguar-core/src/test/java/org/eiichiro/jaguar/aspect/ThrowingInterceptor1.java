@@ -8,16 +8,16 @@ import org.eiichiro.jaguar.inject.Inject;
 @Aspect
 public class ThrowingInterceptor1 {
 
-	@Inject ThrowingObject throwingObject;
+	@Inject ThrowingComponent throwingComponent;
 	
 	@Throwing
 	public void throwing1() {
-		throwingObject.order.add("throwing1");
+		throwingComponent.order.add("throwing1");
 	}
 	
 	@Throwing
 	public void throwing2() {
-		throwingObject.order.add("throwing2");
+		throwingComponent.order.add("throwing2");
 	}
 	
 }

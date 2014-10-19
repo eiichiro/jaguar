@@ -11,23 +11,23 @@ public class BindingTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(BindingObject.class, BindingObject3.class,
-				BindingObject4.class, BindingObject5.class,
-				BindingObject6.class, BindingObject7.class);
-		BindingObject bindingObject = component(BindingObject.class);
-		assertNull(bindingObject.bindingObject1);
-		assertThat(bindingObject.bindingObject12, is(BindingObject4.class));
-		assertNull(bindingObject.bindingObject13);
-		assertNull(bindingObject.bindingObject2);
-		assertThat(bindingObject.bindingObject22, is(BindingObject6.class));
-		assertThat(bindingObject.bindingObject5, is(BindingObject5.class));
-		BindingObject7 bindingObject7 = component(BindingObject7.class);
-		assertNull(bindingObject7.bindingObject1);
-		assertThat(bindingObject7.bindingObject12, is(BindingObject4.class));
-		assertNull(bindingObject7.bindingObject13);
-		assertNull(bindingObject7.bindingObject2);
-		assertThat(bindingObject7.bindingObject22, is(BindingObject6.class));
-		assertThat(bindingObject7.bindingObject5, is(BindingObject5.class));
+		install(BindingComponent.class, BindingComponent3.class,
+				BindingComponent4.class, BindingComponent5.class,
+				BindingComponent6.class, BindingComponent7.class);
+		BindingComponent bindingComponent = component(BindingComponent.class);
+		assertNull(bindingComponent.bindingComponent1);
+		assertThat(bindingComponent.bindingObject12, is(BindingComponent4.class));
+		assertNull(bindingComponent.bindingObject13);
+		assertNull(bindingComponent.bindingComponent2);
+		assertThat(bindingComponent.bindingObject22, is(BindingComponent6.class));
+		assertThat(bindingComponent.bindingComponent5, is(BindingComponent5.class));
+		BindingComponent7 bindingComponent7 = component(BindingComponent7.class);
+		assertNull(bindingComponent7.bindingComponent1);
+		assertThat(bindingComponent7.bindingObject12, is(BindingComponent4.class));
+		assertNull(bindingComponent7.bindingObject13);
+		assertNull(bindingComponent7.bindingComponent2);
+		assertThat(bindingComponent7.bindingObject22, is(BindingComponent6.class));
+		assertThat(bindingComponent7.bindingComponent5, is(BindingComponent5.class));
 		shutdown();
 	}
 	

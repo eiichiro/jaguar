@@ -11,11 +11,11 @@ public class ConstructedTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(Object1.class);
-		Object1 object1 = component(Object1.class);
-		assertThat(object1.lifecycles.size(), is(4));
-		assertTrue(object1.lifecycles.contains("Constructed"));
-		assertTrue(object1.lifecycles.contains("Constructed2"));
+		install(Component1.class);
+		Component1 component1 = component(Component1.class);
+		assertThat(component1.lifecycles.size(), is(4));
+		assertTrue(component1.lifecycles.contains("Constructed"));
+		assertTrue(component1.lifecycles.contains("Constructed2"));
 		shutdown();
 	}
 

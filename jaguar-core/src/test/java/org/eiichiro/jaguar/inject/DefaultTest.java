@@ -11,9 +11,9 @@ public class DefaultTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(DefaultObject.class, DefaultObject1.class, DefaultObject2.class, DefaultObject3.class);
-		DefaultObject3 defaultObject3 = component(DefaultObject3.class);
-		assertThat(defaultObject3.defaultObject.getClass(), is((Object) DefaultObject1.class));
+		install(DefaultComponent.class, DefaultComponent1.class, DefaultComponent2.class, DefaultComponent3.class);
+		DefaultComponent3 defaultComponent3 = component(DefaultComponent3.class);
+		assertThat(defaultComponent3.defaultComponent.getClass(), is((Object) DefaultComponent1.class));
 		shutdown();
 	}
 	

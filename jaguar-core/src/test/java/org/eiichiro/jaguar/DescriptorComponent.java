@@ -1,9 +1,8 @@
 package org.eiichiro.jaguar;
 
-import org.eiichiro.jaguar.Component;
+import org.eiichiro.jaguar.aspect.Before;
 import org.eiichiro.jaguar.deployment.Production;
 import org.eiichiro.jaguar.inject.Inject;
-import org.eiichiro.jaguar.interceptor.Before;
 import org.eiichiro.jaguar.lifecycle.Constructed;
 import org.eiichiro.jaguar.scope.Singleton;
 import org.eiichiro.jaguar.validation.Required;
@@ -13,18 +12,7 @@ import org.eiichiro.jaguar.validation.Required;
 @DescriptorBinding
 @DescriptorConstraint
 @DescriptorIntercept
-public class DescriptorComponent extends Component<Object> {
-
-	private final Object instance;
-	
-	public DescriptorComponent() {
-		instance = new Object();
-	}
-	
-	@Override
-	public Object instance() {
-		return instance;
-	}
+public class DescriptorComponent {
 
 	@Inject Object object;
 	
@@ -34,7 +22,6 @@ public class DescriptorComponent extends Component<Object> {
 	@Before
 	public void advice() {}
 	
-	// Ignored.
 	@DescriptorIntercept
 	public void method() {}
 	

@@ -11,42 +11,42 @@ public class BeforeTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(BeforeObject.class, BeforeInterceptor1.class);
-		BeforeObject beforeObject = component(BeforeObject.class);
-		beforeObject.method1();
-		assertThat(beforeObject.order.size(), is(3));
-		assertThat(beforeObject.order.get(0), is("before1"));
-		assertThat(beforeObject.order.get(1), is("before2"));
-		assertThat(beforeObject.order.get(2), is("method1"));
+		install(BeforeComponent.class, BeforeInterceptor1.class);
+		BeforeComponent beforeComponent = component(BeforeComponent.class);
+		beforeComponent.method1();
+		assertThat(beforeComponent.order.size(), is(3));
+		assertThat(beforeComponent.order.get(0), is("before1"));
+		assertThat(beforeComponent.order.get(1), is("before2"));
+		assertThat(beforeComponent.order.get(2), is("method1"));
 		shutdown();
 		
 		bootstrap();
-		install(BeforeObject.class, BeforeInterceptor1.class);
-		beforeObject = component(BeforeObject.class);
-		beforeObject.method2("before-");
+		install(BeforeComponent.class, BeforeInterceptor1.class);
+		beforeComponent = component(BeforeComponent.class);
+		beforeComponent.method2("before-");
 		shutdown();
 		
 		bootstrap();
-		install(BeforeObject.class, BeforeInterceptor2.class);
-		beforeObject = component(BeforeObject.class);
-		beforeObject.method2("before-");
-		assertThat(beforeObject.order.size(), is(2));
-		assertThat(beforeObject.order.get(0), is("before-before1"));
-		assertThat(beforeObject.order.get(1), is("before-method2"));
+		install(BeforeComponent.class, BeforeInterceptor2.class);
+		beforeComponent = component(BeforeComponent.class);
+		beforeComponent.method2("before-");
+		assertThat(beforeComponent.order.size(), is(2));
+		assertThat(beforeComponent.order.get(0), is("before-before1"));
+		assertThat(beforeComponent.order.get(1), is("before-method2"));
 		shutdown();
 		
 		bootstrap();
-		install(BeforeObject.class, BeforeInterceptor3.class);
-		beforeObject = component(BeforeObject.class);
+		install(BeforeComponent.class, BeforeInterceptor3.class);
+		beforeComponent = component(BeforeComponent.class);
 		
 		try {
-			beforeObject.method2("before-");
+			beforeComponent.method2("before-");
 			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		assertThat(beforeObject.order.size(), is(0));
+		assertThat(beforeComponent.order.size(), is(0));
 		shutdown();
 	}
 	

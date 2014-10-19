@@ -11,10 +11,10 @@ public class NameTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(NameObject.class, NameObject2.class, NameObject3.class);
-		NameObject nameObject = component(NameObject.class);
-		assertThat(nameObject.nameObject1, is(NameObject2.class));
-		assertNull(nameObject.nameObject12);
+		install(NameComponent.class, NameComponent2.class, NameComponent3.class);
+		NameComponent nameComponent = component(NameComponent.class);
+		assertThat(nameComponent.nameComponent1, is(NameComponent2.class));
+		assertNull(nameComponent.nameObject12);
 		shutdown();
 	}
 	

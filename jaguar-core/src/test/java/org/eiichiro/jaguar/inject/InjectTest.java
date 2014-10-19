@@ -10,17 +10,17 @@ public class InjectTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(InjectObject.class, InjectObject2.class, InjectObject3.class,
+		install(InjectComponent.class, InjectComponent2.class, InjectComponent3.class,
 				InjectInterceptor.class);
-		InjectObject injectObject = component(InjectObject.class);
-		assertNull(injectObject.injectObject2);
-		assertNotNull(injectObject.injectObject22);
-		assertNull(injectObject.string);
-		InjectObject3 injectObject3 = component(InjectObject3.class);
-		assertNotNull(injectObject3.injectObject2);
-		assertNull(injectObject3.string);
+		InjectComponent injectComponent = component(InjectComponent.class);
+		assertNull(injectComponent.injectComponent2);
+		assertNotNull(injectComponent.injectObject22);
+		assertNull(injectComponent.string);
+		InjectComponent3 injectComponent3 = component(InjectComponent3.class);
+		assertNotNull(injectComponent3.injectComponent2);
+		assertNull(injectComponent3.string);
 		InjectInterceptor injectInterceptor = component(InjectInterceptor.class);
-		assertNotNull(injectInterceptor.injectObject2);
+		assertNotNull(injectInterceptor.injectComponent2);
 		assertNull(injectInterceptor.string);
 		shutdown();
 	}

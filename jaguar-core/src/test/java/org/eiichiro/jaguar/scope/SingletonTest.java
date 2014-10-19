@@ -15,14 +15,14 @@ public class SingletonTest {
 	@Test
 	public void test() throws InterruptedException {
 		bootstrap();
-		install(SingletonObject.class);
-		SingletonObject singletonObject = component(SingletonObject.class);
-		final SingletonObject singletonObject2 = component(SingletonObject.class);
-		assertSame(singletonObject, singletonObject2);
+		install(SingletonComponent.class);
+		SingletonComponent singletonComponent = component(SingletonComponent.class);
+		final SingletonComponent singletonObject2 = component(SingletonComponent.class);
+		assertSame(singletonComponent, singletonObject2);
 		java.lang.Thread thread = new java.lang.Thread(new Runnable() {
 			
 			public void run() {
-				SingletonObject singletonObject3 = component(SingletonObject.class);
+				SingletonComponent singletonObject3 = component(SingletonComponent.class);
 				assertSame(singletonObject2, singletonObject3);
 			}
 			
@@ -35,13 +35,13 @@ public class SingletonTest {
 	@Test
 	public void testEager() {
 		bootstrap();
-		install(EagerSingletonObject.class);
+		install(EagerSingletonComponent.class);
 		Container container = component(Container.class);
-		Descriptor<?> descriptor = (Descriptor<?>) container.components().get(EagerSingletonObject.class).toArray()[0];
+		Descriptor<?> descriptor = (Descriptor<?>) container.components().get(EagerSingletonComponent.class).toArray()[0];
 		Context context = container.component(container.contexts().get(Singleton.class));
 		Object object = context.get(descriptor);
 		assertNotNull(object);
-		assertThat(object, instanceOf(EagerSingletonObject.class));
+		assertThat(object, instanceOf(EagerSingletonComponent.class));
 		shutdown();
 	}
 

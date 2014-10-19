@@ -104,12 +104,12 @@ public class ClasspathScannerTest {
 	public void testScan() {
 		Jaguar.bootstrap();
 		Collection<Class<?>> classes = new ClasspathScanner().scan();
-		assertTrue(classes.contains(ClasspathScannerObject1.class));
-		assertTrue(classes.contains(ClasspathScannerObject2.class));
-		assertTrue(classes.contains(ClasspathScannerObject3.class));
-		assertTrue(classes.contains(ClasspathScannerObject4.class));
-		assertTrue(classes.contains(ClasspathScannerComponent.class));
-		assertFalse(classes.contains(ClasspathScannerObject5.class));
+		assertTrue(classes.contains(ClasspathScannerComponent1.class));
+		assertTrue(classes.contains(ClasspathScannerComponent2.class));
+		assertTrue(classes.contains(ClasspathScannerComponent3.class));
+		assertTrue(classes.contains(ClasspathScannerComponent4.class));
+		assertTrue(classes.contains(ClasspathScannerProvider.class));
+		assertFalse(classes.contains(ClasspathScannerComponent5.class));
 		Jaguar.shutdown();
 	}
 

@@ -44,7 +44,7 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
 
 /**
- * {@code Descriptor} describes the component's structure.
+ * {@code Descriptor} describes the provider's structure.
  * 
  * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
@@ -54,7 +54,7 @@ public class Descriptor<T> implements Serializable {
 
 	private final Class<T> type;
 	
-	private final boolean component;
+	private final boolean provider;
 	
 	private final boolean aspect;
 	
@@ -81,13 +81,13 @@ public class Descriptor<T> implements Serializable {
 	private ListMultimap<Class<? extends Annotation>, Method> advices = ArrayListMultimap.create();
 	
 	/**
-	 * Constructs a new {@code Descriptor} with the specified component class.
-	 * NOTE: Joinpoints are ignored if the specified component is a subclass of 
-	 * {@link Provider} and advises are ignored if the specified component is 
+	 * Constructs a new {@code Descriptor} with the specified provider class.
+	 * NOTE: Joinpoints are ignored if the specified provider is a subclass of 
+	 * {@link Provider} and advises are ignored if the specified provider is 
 	 * not an aspect.
 	 * 
-	 * @param type The component class.
-	 * @throws ConfigurationException If the specified component class is 
+	 * @param type The provider class.
+	 * @throws ConfigurationException If the specified provider class is 
 	 * annotated by multiple scope qualifiers or annotated with {@code @Inject} 
 	 * on multiple constructors.
 	 */
@@ -95,7 +95,7 @@ public class Descriptor<T> implements Serializable {
 	public Descriptor(Class<T> type) {
 		Preconditions.checkArgument(type != null, "Parameter 'type' must not be [" + type + "]");
 		this.type = type;
-		component = Provider.class.isAssignableFrom(type);
+		provider = Provider.class.isAssignableFrom(type);
 		aspect = type.isAnnotationPresent(Aspect.class);
 		Function<Annotation[], Void> annotations = new Function<Annotation[], Void>() {
 			
@@ -118,7 +118,7 @@ public class Descriptor<T> implements Serializable {
 							scope = annotation;
 						} else {
 							throw new ConfigurationException(
-									"Provider must not be annotated with multiple scope qualifiers: ["
+									"Component must not be annotated with multiple scope qualifiers: ["
 											+ scope + "] and [" + annotation
 											+ "]");
 						}
@@ -178,7 +178,7 @@ public class Descriptor<T> implements Serializable {
 			for (Annotation annotation : method.getAnnotations()) {
 				Class<? extends Annotation> annotationType = annotation.annotationType();
 				
-				if (!component) {
+				if (!provider) {
 					if (annotationType.isAnnotationPresent(Pointcut.class)) {
 						joinpoints.add(method);
 					}
@@ -198,45 +198,45 @@ public class Descriptor<T> implements Serializable {
 	}
 	
 	/**
-	 * Returns the component class.
+	 * Returns the provider class.
 	 * 
-	 * @return The component class.
+	 * @return The provider class.
 	 */
 	public Class<T> type() {
 		return type;
 	}
 
 	/**
-	 * Returns if the component is an aspect.
+	 * Returns if the provider is an aspect.
 	 * 
-	 * @return If the component is an aspect.
+	 * @return If the provider is an aspect.
 	 */
 	public boolean aspect() {
 		return aspect;
 	}
 	
 	/**
-	 * Returns the deployment qualifiers the component is deployed.
+	 * Returns the deployment qualifiers the provider is deployed.
 	 * 
-	 * @return The deployment qualifiers the component is deployed.
+	 * @return The deployment qualifiers the provider is deployed.
 	 */
 	public Set<Class<? extends Annotation>> deployments() {
 		return deployments;
 	}
 	
 	/**
-	 * Returns the scope the component is sustained.
+	 * Returns the scope the provider is sustained.
 	 * 
-	 * @return The scope the component is sustained.
+	 * @return The scope the provider is sustained.
 	 */
 	public Annotation scope() {
 		return scope;
 	}
 	
 	/**
-	 * Returns the binding annotations the component is qualified.
+	 * Returns the binding annotations the provider is qualified.
 	 * 
-	 * @return The binding annotations the component is qualified.
+	 * @return The binding annotations the provider is qualified.
 	 */
 	public Set<Annotation> bindings() {
 		return bindings;
@@ -297,9 +297,9 @@ public class Descriptor<T> implements Serializable {
 	}
 	
 	/**
-	 * Returns the pointcut annotations the component is qualified.
+	 * Returns the pointcut annotations the provider is qualified.
 	 * 
-	 * @return The pointcut annotations the component is qualified.
+	 * @return The pointcut annotations the provider is qualified.
 	 */
 	public Set<Annotation> pointcuts() {
 		return pointcuts;
@@ -321,7 +321,7 @@ public class Descriptor<T> implements Serializable {
 	public String toString() {
 		return "type: " + type + ", deployments: " + deployments + ", scope: " + scope
 				+ ", bindings: " + bindings + ", constraints: " + constraints + ", constructor: " + constructor
-				+ ", injects: " + injects + ((!component) ? ", joinpoints: " + joinpoints : "") 
+				+ ", injects: " + injects + ((!provider) ? ", joinpoints: " + joinpoints : "") 
 				+ ", lifecycles: " + lifecycles + ", validates: " + validates 
 				+ ((aspect) ? ", pointcuts: " + pointcuts : "")
 				+ ((aspect) ? ", advices: " + advices : "");

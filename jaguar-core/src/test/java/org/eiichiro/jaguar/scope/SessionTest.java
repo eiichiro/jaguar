@@ -18,14 +18,14 @@ public class SessionTest {
 	public void test() throws Exception {
 		// Outside Web container -> the same behavior as @Thread.
 		bootstrap();
-		install(SessionObject.class);
-		SessionObject sessionObject = component(SessionObject.class);
-		final SessionObject sessionObject2 = component(SessionObject.class);
-		assertSame(sessionObject, sessionObject2);
+		install(SessionComponent.class);
+		SessionComponent sessionComponent = component(SessionComponent.class);
+		final SessionComponent sessionObject2 = component(SessionComponent.class);
+		assertSame(sessionComponent, sessionObject2);
 		java.lang.Thread thread = new java.lang.Thread(new Runnable() {
 			
 			public void run() {
-				SessionObject sessionObject3 = component(SessionObject.class);
+				SessionComponent sessionObject3 = component(SessionComponent.class);
 				assertNotSame(sessionObject2, sessionObject3);
 			}
 			

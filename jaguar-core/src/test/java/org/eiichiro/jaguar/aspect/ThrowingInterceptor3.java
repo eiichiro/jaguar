@@ -8,10 +8,10 @@ import org.eiichiro.jaguar.inject.Inject;
 @Aspect
 public class ThrowingInterceptor3 {
 
-	@Inject ThrowingObject throwingObject;
+	@Inject ThrowingComponent throwingComponent;
 	
 	@Throwing
-	public void throwing1(ThrowingObject afterObject) {
+	public void throwing1(ThrowingComponent afterObject) {
 		// Always fail -> parameter type & number is different from intercepted method.
 		afterObject.order.add(afterObject + "throwing1");
 	}

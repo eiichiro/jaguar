@@ -12,12 +12,12 @@ public class DeploymentTest {
 	public void test() {
 		deployment(Deployment1.class);
 		bootstrap();
-		install(DevelopmentDeployedObject.class);
-		install(TesDeployedObject.class);
-		install(ProductionDeployedObject.class);
-		install(EmergencyDeployedObject.class);
-		install(Deployment1DeployedObject.class);
-		DeployedObject component = component(DeployedObject.class);
+		install(DevelopmentDeployedComponent.class);
+		install(TesDeployedComponent.class);
+		install(ProductionDeployedComponent.class);
+		install(EmergencyDeployedComponent.class);
+		install(Deployment1DeployedComponent.class);
+		DeployedComponent component = component(DeployedComponent.class);
 		assertThat(component.deployment(), is((Object) Deployment1.class));
 		shutdown();
 	}

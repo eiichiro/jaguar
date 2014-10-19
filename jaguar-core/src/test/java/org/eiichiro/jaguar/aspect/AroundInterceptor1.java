@@ -10,20 +10,20 @@ import org.eiichiro.reverb.reflection.MethodInvocation;
 @Aspect
 public class AroundInterceptor1 {
 
-	@Inject AroundObject aroundObject;
+	@Inject AroundComponent aroundComponent;
 	
 	@Around
 	public void around1(Invocation<Void> invocation) throws Throwable {
-		aroundObject.order.add("before-around1");
+		aroundComponent.order.add("before-around1");
 		invocation.proceed();
-		aroundObject.order.add("after-around1");
+		aroundComponent.order.add("after-around1");
 	}
 	
 	@Around
 	public void around2(MethodInvocation<Void> invocation) throws Throwable {
-		aroundObject.order.add("before-around2");
+		aroundComponent.order.add("before-around2");
 		invocation.proceed();
-		aroundObject.order.add("after-around2");
+		aroundComponent.order.add("after-around2");
 	}
 	
 }

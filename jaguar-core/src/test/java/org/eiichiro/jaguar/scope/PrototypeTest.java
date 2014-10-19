@@ -10,10 +10,10 @@ public class PrototypeTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(PrototypeObject.class);
-		PrototypeObject prototypeObject = component(PrototypeObject.class);
-		PrototypeObject prototypeObject2 = component(PrototypeObject.class);
-		assertNotSame(prototypeObject, prototypeObject2);
+		install(PrototypeComponent.class);
+		PrototypeComponent prototypeComponent = component(PrototypeComponent.class);
+		PrototypeComponent prototypeObject2 = component(PrototypeComponent.class);
+		assertNotSame(prototypeComponent, prototypeObject2);
 		shutdown();
 	}
 	

@@ -11,16 +11,16 @@ public class AfterTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(AfterObject.class, AfterInterceptor1.class);
-		AfterObject afterObject = component(AfterObject.class);
-		afterObject.method1();
-		assertThat(afterObject.order.size(), is(3));
-		assertThat(afterObject.order.get(0), is("method1"));
+		install(AfterComponent.class, AfterInterceptor1.class);
+		AfterComponent afterComponent = component(AfterComponent.class);
+		afterComponent.method1();
+		assertThat(afterComponent.order.size(), is(3));
+		assertThat(afterComponent.order.get(0), is("method1"));
 		
-		if (afterObject.order.get(1).equals("after1")) {
-			assertThat(afterObject.order.get(2), is("after2"));
-		} else if (afterObject.order.get(1).equals("after2")) {
-			assertThat(afterObject.order.get(2), is("after1"));
+		if (afterComponent.order.get(1).equals("after1")) {
+			assertThat(afterComponent.order.get(2), is("after2"));
+		} else if (afterComponent.order.get(1).equals("after2")) {
+			assertThat(afterComponent.order.get(2), is("after1"));
 		} else {
 			fail();
 		}
@@ -28,27 +28,27 @@ public class AfterTest {
 		shutdown();
 		
 		bootstrap();
-		install(AfterObject.class, AfterInterceptor2.class);
-		afterObject = component(AfterObject.class);
-		afterObject.method2();
-		assertThat(afterObject.order.size(), is(2));
-		assertThat(afterObject.order.get(0), is("method2"));
-		assertThat(afterObject.order.get(1), is("after-after1"));
+		install(AfterComponent.class, AfterInterceptor2.class);
+		afterComponent = component(AfterComponent.class);
+		afterComponent.method2();
+		assertThat(afterComponent.order.size(), is(2));
+		assertThat(afterComponent.order.get(0), is("method2"));
+		assertThat(afterComponent.order.get(1), is("after-after1"));
 		shutdown();
 		
 		bootstrap();
-		install(AfterObject.class, AfterInterceptor3.class);
-		afterObject = component(AfterObject.class);
+		install(AfterComponent.class, AfterInterceptor3.class);
+		afterComponent = component(AfterComponent.class);
 		
 		try {
-			afterObject.method2();
+			afterComponent.method2();
 			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		assertThat(afterObject.order.size(), is(1));
-		assertThat(afterObject.order.get(0), is("method2"));
+		assertThat(afterComponent.order.size(), is(1));
+		assertThat(afterComponent.order.get(0), is("method2"));
 		shutdown();
 	}
 	

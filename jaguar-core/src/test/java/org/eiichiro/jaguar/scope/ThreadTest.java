@@ -10,14 +10,14 @@ public class ThreadTest {
 	@Test
 	public void test() throws InterruptedException {
 		bootstrap();
-		install(ThreadObject.class);
-		ThreadObject threadObject = component(ThreadObject.class);
-		final ThreadObject threadObject2 = component(ThreadObject.class);
-		assertSame(threadObject, threadObject2);
+		install(ThreadComponent.class);
+		ThreadComponent threadComponent = component(ThreadComponent.class);
+		final ThreadComponent threadObject2 = component(ThreadComponent.class);
+		assertSame(threadComponent, threadObject2);
 		java.lang.Thread thread = new java.lang.Thread(new Runnable() {
 			
 			public void run() {
-				ThreadObject threadObject3 = component(ThreadObject.class);
+				ThreadComponent threadObject3 = component(ThreadComponent.class);
 				assertNotSame(threadObject2, threadObject3);
 			}
 			

@@ -18,14 +18,14 @@ public class ApplicationTest {
 	public void test() throws Exception {
 		// Outside Web container -> the same behavior as @Singleton.
 		bootstrap();
-		install(ApplicationObject.class);
-		ApplicationObject applicationObject = component(ApplicationObject.class);
-		final ApplicationObject applicationObject2 = component(ApplicationObject.class);
-		assertSame(applicationObject, applicationObject2);
+		install(ApplicationComponent.class);
+		ApplicationComponent applicationComponent = component(ApplicationComponent.class);
+		final ApplicationComponent applicationObject2 = component(ApplicationComponent.class);
+		assertSame(applicationComponent, applicationObject2);
 		java.lang.Thread thread = new java.lang.Thread(new Runnable() {
 			
 			public void run() {
-				ApplicationObject applicationObject3 = component(ApplicationObject.class);
+				ApplicationComponent applicationObject3 = component(ApplicationComponent.class);
 				assertSame(applicationObject2, applicationObject3);
 			}
 			

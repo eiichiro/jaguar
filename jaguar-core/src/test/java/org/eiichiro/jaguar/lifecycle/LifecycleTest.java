@@ -12,10 +12,10 @@ public class LifecycleTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(StartupObject.class);
-		StartupObject startupObject = component(StartupObject.class);
-		Event.of(Startup.class).on(startupObject).fire();
-		assertThat(startupObject.started, is(true));
+		install(StartupComponent.class);
+		StartupComponent startupComponent = component(StartupComponent.class);
+		Event.of(Startup.class).on(startupComponent).fire();
+		assertThat(startupComponent.started, is(true));
 		shutdown();
 	}
 	

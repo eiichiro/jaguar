@@ -11,13 +11,13 @@ public class FailedTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(Object2.class, Object3.class);
-		Object2 object2 = component(Object2.class);
-		component(Object3.class);
+		install(Component2.class, Component3.class);
+		Component2 component2 = component(Component2.class);
+		component(Component3.class);
 		shutdown();
-		assertThat(object2.lifecycles.size(), is(6));
-		assertTrue(object2.lifecycles.contains("Failed"));
-		assertTrue(object2.lifecycles.contains("Failed2LifecycleException"));
+		assertThat(component2.lifecycles.size(), is(6));
+		assertTrue(component2.lifecycles.contains("Failed"));
+		assertTrue(component2.lifecycles.contains("Failed2LifecycleException"));
 	}
 	
 }

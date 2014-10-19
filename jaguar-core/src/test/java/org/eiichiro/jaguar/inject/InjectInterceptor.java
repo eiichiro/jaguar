@@ -1,17 +1,17 @@
 package org.eiichiro.jaguar.inject;
 
+import org.eiichiro.jaguar.aspect.Aspect;
 import org.eiichiro.jaguar.inject.Inject;
-import org.eiichiro.jaguar.interceptor.Interceptor;
 
-@Interceptor
+@Aspect
 public class InjectInterceptor {
 
-	@Inject public InjectInterceptor(InjectObject2 injectObject2, String string) {
-		this.injectObject2 = injectObject2;
+	@Inject public InjectInterceptor(InjectComponent2 injectComponent2, String string) {
+		this.injectComponent2 = injectComponent2;
 		this.string = string;
 	}
 	
-	final InjectObject2 injectObject2;
+	final InjectComponent2 injectComponent2;
 	
 	final String string;
 	

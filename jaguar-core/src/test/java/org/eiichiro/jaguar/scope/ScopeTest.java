@@ -10,10 +10,10 @@ public class ScopeTest {
 	@Test
 	public void test() {
 		bootstrap();
-		install(Scope1Object.class);
-		Scope1Object scope1Object = component(Scope1Object.class);
-		Scope1Object scope1Object2 = component(Scope1Object.class);
-		assertNotSame(scope1Object, scope1Object2);
+		install(Scope1Component.class);
+		Scope1Component scope1Component = component(Scope1Component.class);
+		Scope1Component scope1Object2 = component(Scope1Component.class);
+		assertNotSame(scope1Component, scope1Object2);
 		shutdown();
 	}
 	

@@ -191,7 +191,7 @@ public class Container {
 	 * @return The component instance corresponding to the specified injectee.
 	 */
 	public <T> T component(final Injectee injectee) {
-		logger.debug("Component is requested by injectee: Injectee [" + injectee + "]");
+		logger.debug("Component is requested with injectee: Injectee [" + injectee + "]");
 		Collection<Descriptor<?>> descriptors = new ArrayList<>();
 		Class<?> deployment = deployment();
 		

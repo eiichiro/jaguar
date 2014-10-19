@@ -18,14 +18,14 @@ public class RequestTest {
 	public void test() throws Exception {
 		// Outside Web container -> the same behavior as @Thread.
 		bootstrap();
-		install(RequestObject.class);
-		RequestObject requestObject = component(RequestObject.class);
-		final RequestObject requestObject2 = component(RequestObject.class);
-		assertSame(requestObject, requestObject2);
+		install(RequestComponent.class);
+		RequestComponent requestComponent = component(RequestComponent.class);
+		final RequestComponent requestObject2 = component(RequestComponent.class);
+		assertSame(requestComponent, requestObject2);
 		java.lang.Thread thread = new java.lang.Thread(new Runnable() {
 			
 			public void run() {
-				RequestObject requestObject3 = component(RequestObject.class);
+				RequestComponent requestObject3 = component(RequestComponent.class);
 				assertNotSame(requestObject2, requestObject3);
 			}
 			

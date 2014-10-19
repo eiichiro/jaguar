@@ -8,11 +8,11 @@ import org.eiichiro.jaguar.inject.Inject;
 @Aspect
 public class AfterInterceptor2 {
 
-	@Inject AfterObject afterObject;
+	@Inject AfterComponent afterComponent;
 	
 	@After
 	public void after1(String string) {
-		afterObject.order.add(string + "after1");
+		afterComponent.order.add(string + "after1");
 	}
 	
 }
