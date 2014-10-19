@@ -32,9 +32,10 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.apache.commons.lang.ClassUtils;
+import org.eiichiro.jaguar.inject.Binding;
 import org.eiichiro.jaguar.inject.Provider;
 import org.eiichiro.jaguar.inject.Default;
-import org.eiichiro.jaguar.inject.Key;
+import org.eiichiro.jaguar.inject.Injectee;
 import org.eiichiro.jaguar.inject.Name;
 import org.eiichiro.jaguar.lifecycle.Activated;
 import org.eiichiro.jaguar.lifecycle.Event;
@@ -143,8 +144,9 @@ public class Container {
 	 * @param component The component type.
 	 * @return The component instance of the specified component type.
 	 */
+	@SuppressWarnings("unchecked")
 	public <T> T component(Class<T> component) {
-		logger.debug("Provider is requested with type: Type [" + component + "]");
+		logger.debug("Component is requested with type: Type [" + component + "]");
 		Preconditions.checkArgument(component != null, 
 				"Parameter 'component' must not be [" + component + "]");
 		List<Descriptor<?>> descriptors = new ArrayList<>();
@@ -162,38 +164,38 @@ public class Container {
 		if (descriptors.isEmpty()) {
 			logger.warn("No component returned: Current deployment ["
 					+ ((deployment == null) ? deployment : deployment.getSimpleName())
-					+ "]; Provider type [" + component 
+					+ "]; Component type [" + component 
 					+ "]; You must install an appropriate component on ahead "
 					+ "invoking [public <T> void install(Class<T> component)]");
 			return null;
 		} else if (descriptors.size() > 1) {
-			logger.warn("Provider is duplicated: Provider type [" + component
+			logger.warn("Component is duplicated: Provider type [" + component
 					+ "]; You must specify more concrete type");
 			return null;
 		}
 		
-		return instance(component(descriptors.get(0)));
+		return instance(component(descriptors.get(0)), new Injectee(Injectee.Kind.LOCAL_VARIABLE, component, Collections.EMPTY_SET));
 	}
 	
 	/**
-	 * Returns assembled component instance corresponding to the specified key 
-	 * (Provider type and binding annotations).
+	 * Returns assembled component instance corresponding to the specified injectee 
+	 * (Component type and qualifiers).
 	 * <b>NOTE: This method is designed for an internal use.</b>
 	 * If the component is not found or duplicated, this method returns 
 	 * <code>null</code>. If a {@link Default} qualified component is included 
 	 * in the candidate, this method returns it in preference.
 	 * 
 	 * @param <T> The component type.
-	 * @param key The {@link Key} constructed from the injective field to get 
+	 * @param injectee The {@link Injectee} constructed from the injective field to get 
 	 * the dependent component.
-	 * @return The component instance corresponding to the specified key.
+	 * @return The component instance corresponding to the specified injectee.
 	 */
-	public <T> T component(final Key<T> key) {
-		logger.debug("Provider is requested with key: Key [" + key + "]");
+	public <T> T component(final Injectee injectee) {
+		logger.debug("Component is requested by injectee: Injectee [" + injectee + "]");
 		Collection<Descriptor<?>> descriptors = new ArrayList<>();
 		Class<?> deployment = deployment();
 		
-		for (Descriptor<?> descriptor : components.get(key.type())) {
+		for (Descriptor<?> descriptor : components.get(injectee.type())) {
 			Set<Class<? extends Annotation>> deployments = descriptor.deployments();
 			
 			if (deployments.isEmpty() || deployment == null
@@ -205,26 +207,34 @@ public class Container {
 		if (descriptors.isEmpty()) {
 			logger.warn("No component returned: Current deployment [" 
 					+ ((deployment == null) ? deployment : deployment.getSimpleName())
-					+ "]; Provider key [" + key 
+					+ "]; Injectee [" + injectee 
 					+ "]; You must install an appropriate component on ahead "
 					+ "invoking [public <T> void install(Class<T> component)]");
 			return null;
 		}
 		
+		final Set<Annotation> bindings = new HashSet<>();
+		
+		for (Annotation qualifier : injectee.qualifiers()) {
+			if (qualifier.annotationType().isAnnotationPresent(Binding.class)) {
+				bindings.add(qualifier);
+			}
+		}
+		
 		descriptors = Collections2.filter(descriptors, new Predicate<Descriptor<?>>() {
 
 			public boolean apply(Descriptor<?> descriptor) {
-				return Sets.difference(key.bindings(), descriptor.bindings()).size() == 0;
+				return Sets.difference(bindings, descriptor.bindings()).size() == 0;
 			}
 			
 		});
 		
 		if (descriptors.isEmpty()) {
-			logger.warn("Provider is missing: Provider key [" + key 
+			logger.warn("Component is missing: Injectee [" + injectee 
 					+ "]; You must specify binding annotations on the field correctly");
 			return null;
 		} else if (descriptors.size() == 1) {
-			return instance(component(descriptors.toArray(new Descriptor<?>[1])[0]));
+			return instance(component(descriptors.toArray(new Descriptor<?>[1])[0]), injectee);
 		} else {
 			descriptors = Collections2.filter(descriptors, new Predicate<Descriptor<?>>() {
 
@@ -243,9 +253,9 @@ public class Container {
 			if (descriptors.size() == 1) {
 				Descriptor<?> descriptor = descriptors.toArray(new Descriptor<?>[1])[0];
 				logger.debug("@Default qualified component [" + descriptor + "] is returned in preference");
-				return instance(component(descriptor));
+				return instance(component(descriptor), injectee);
 			} else {
-				logger.warn("Provider is duplicated: Provider key [" + key
+				logger.warn("Component is duplicated: Injectee [" + injectee
 						+ "]; You must specify more concrete type " 
 						+ "or binding annotations strictly");
 				return null;
@@ -264,13 +274,13 @@ public class Container {
 	 * descriptor.
 	 */
 	public <T> T component(Descriptor<T> descriptor) {
-		logger.debug("Provider is requested with descriptor: Descriptor [" + descriptor + "]");
+		logger.debug("Component is requested with descriptor: Descriptor [" + descriptor + "]");
 		Set<Class<? extends Annotation>> deployments = descriptor.deployments();
 		Class<?> deployment = deployment();
 		
 		if (deployment != null && !deployments.isEmpty() && !deployments.contains(deployment)) {
 			logger.warn("No component returned: Current deployment [" + deployment.getSimpleName() 
-					+ "]; Provider descriptor [" + descriptor 
+					+ "]; Component descriptor [" + descriptor 
 					+ "]; You must install an appropriate component on ahead "
 					+ "invoking [public <T> void install(Class<T> component)]");
 			return null;
@@ -287,16 +297,16 @@ public class Container {
 					return singleton;
 				}
 				
+				Class<? extends Context> ctx = s.getAnnotation(Scope.class).value();
 				Descriptor<? extends Context> desc = contexts.get(s);
 				
 				if (desc == null) {
-					Class<? extends Context> ctx = s.getAnnotation(Scope.class).value();
 					install(ctx);
 					desc = (Descriptor<? extends Context>) components.get(ctx).get(0);
 					contexts.put(s, desc);
 				}
 				
-				return instance(component(desc));
+				return instance(component(desc), new Injectee(Injectee.Kind.LOCAL_VARIABLE, ctx, Collections.EMPTY_SET));
 			}
 			
 		};
@@ -319,8 +329,13 @@ public class Container {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private <T> T instance(Object component) {
-		return (component instanceof Provider) ? ((Provider<T>) component).provide(null) : (T) component;
+	private <T> T instance(Object component, Injectee injectee) {
+		if (component instanceof Provider) {
+			Provider<T> provider = (Provider<T>) component;
+			return provider.provide(injectee);
+		}
+		
+		return (T) component;
 	}
 	
 	/**
@@ -353,7 +368,7 @@ public class Container {
 				"Parameter 'component' must not be [" + component + "]");
 		
 		if (installed(component)) {
-			logger.debug("Installation ignored: Provider [" + component + "] has already been installed");
+			logger.debug("Installation ignored: Component [" + component + "] has already been installed");
 			return;
 		}
 		
@@ -361,7 +376,7 @@ public class Container {
 		
 		if (component.isInterface() || Modifier.isAbstract(modifiers) || !Modifier.isPublic(modifiers)) {
 			logger.warn("Interface, abstract and non-public class cannot be installed: " 
-					+ "Provider [" + component + "]");
+					+ "Component [" + component + "]");
 			return;
 		}
 		
@@ -417,9 +432,9 @@ public class Container {
 			installed.add(component);
 			this.components.putAll(components);
 			this.pointcuts.putAll(pointcuts);
-			logger.info("Provider has been installed: Provider descriptor [" + descriptor + "]");
+			logger.info("Component has been installed: Provider descriptor [" + descriptor + "]");
 		} catch (Exception e) {
-			logger.warn("Provider cannot be installed: Provider type [" + component + "]", e);
+			logger.warn("Component cannot be installed: Provider type [" + component + "]", e);
 			return;
 		}
 	}

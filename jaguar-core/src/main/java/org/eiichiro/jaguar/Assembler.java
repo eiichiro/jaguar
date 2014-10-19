@@ -29,7 +29,7 @@ import net.sf.cglib.proxy.Enhancer;
 
 import org.eiichiro.jaguar.aspect.Interceptor;
 import org.eiichiro.jaguar.inject.Binding;
-import org.eiichiro.jaguar.inject.Key;
+import org.eiichiro.jaguar.inject.Injectee;
 import org.eiichiro.jaguar.lifecycle.Constructed;
 import org.eiichiro.jaguar.lifecycle.Event;
 import org.eiichiro.jaguar.validation.Constraint;
@@ -110,7 +110,7 @@ public class Assembler<T> {
 	 * event on the instance. If any exception has occurred, assembler returns 
 	 * <code>null</code> immediately.</li>
 	 * <li>Field dependency injection. Assembler gets the dependent component 
-	 * from the {@code Container} corresponding to the {@link Key} constructed from the 
+	 * from the {@code Container} corresponding to the {@link Injectee} constructed from the 
 	 * injectable field and populates it to the assembling instance. If any 
 	 * exception has occurred, assembler skips the failed population.
 	 * </li>
@@ -153,7 +153,7 @@ public class Assembler<T> {
 				}
 				
 			} catch (Exception e) {
-				logger.warn("Provider cannot be instantiated: Descriptor [" + descriptor + "]", e);
+				logger.warn("Component cannot be instantiated: Descriptor [" + descriptor + "]", e);
 				return null;
 			}
 			
@@ -166,15 +166,17 @@ public class Assembler<T> {
 				field.setAccessible(true);
 			}
 			
-			Set<Annotation> bindings = new HashSet<Annotation>();
+			Set<Annotation> qualifiers = new HashSet<Annotation>();
 			
 			for (Annotation annotation : field.getAnnotations()) {
-				if (annotation.annotationType().isAnnotationPresent(Binding.class)) {
-					bindings.add(annotation);
+				Class<? extends Annotation> type = annotation.annotationType();
+				
+				if (type.isAnnotationPresent(Qualifier.class) || type.isAnnotationPresent(Binding.class)) {
+					qualifiers.add(annotation);
 				}
 			}
 			
-			Object component = container.component(key(field.getType(), bindings));
+			Object component = container.component(new Injectee(Injectee.Kind.FIELD, field.getType(), qualifiers));
 			
 			try {
 				field.set(instance, component);
@@ -206,7 +208,7 @@ public class Assembler<T> {
 					try {
 						value = field.get(instance);
 					} catch (Exception e) {
-						logger.warn("Provider field [" + field + "] cannot be validated", e);
+						logger.warn("Component field [" + field + "] cannot be validated", e);
 					}
 					
 					boolean valid = false;
@@ -264,7 +266,7 @@ public class Assembler<T> {
 			}
 		}
 		
-		logger.debug("Provider has been assembled: Descriptor [" + descriptor + "]");
+		logger.debug("Component has been assembled: Descriptor [" + descriptor + "]");
 		return instance;
 	}
 	
@@ -274,22 +276,20 @@ public class Assembler<T> {
 		Annotation[][] annotations = constructor.getParameterAnnotations();
 		
 		for (int i = 0; i < parameterTypes.length; i++) {
-			Set<Annotation> bindings = new HashSet<Annotation>();
+			Set<Annotation> qualifiers = new HashSet<Annotation>();
 			
 			for (Annotation annotation : annotations[i]) {
-				if (annotation.annotationType().isAnnotationPresent(Binding.class)) {
-					bindings.add(annotation);
+				Class<? extends Annotation> type = annotation.annotationType();
+				
+				if (type.isAnnotationPresent(Qualifier.class) || type.isAnnotationPresent(Binding.class)) {
+					qualifiers.add(annotation);
 				}
 			}
 			
-			parameters.add(container.component(key(parameterTypes[i], bindings)));
+			parameters.add(container.component(new Injectee(Injectee.Kind.PARAMETER, parameterTypes[i], qualifiers)));
 		}
 		
 		return parameters;
-	}
-	
-	private <C> Key<C> key(Class<C> type, Set<Annotation> bindings) {
-		return new Key<C>(type, bindings);
 	}
 	
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Eiichiro Uchiumi. All Rights Reserved.
+ * Copyright (C) 2011-2014 Eiichiro Uchiumi. All Rights Reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,29 +26,42 @@ import com.google.common.base.Preconditions;
 /**
  * Component type and binding annotations to lookup the component from the 
  * container.
- * {@code Key} is constructed by the {@link Assembler} internally from the 
+ * {@code Injectee} is constructed by the {@link Assembler} internally from the 
  * {@code @Inject}-annotated constructor's parameters and field that the dependent 
  * component to be injected.
  * 
  * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
-public class Key<T> {
+public class Injectee {
 
-	private final Class<T> type;
+	public static enum Kind {
+		PARAMETER, 
+		FIELD, 
+		LOCAL_VARIABLE
+	}
 	
-	private final Set<Annotation> bindings;
+	private final Kind kind;
+	
+	private final Class<?> type;
+	
+	private final Set<Annotation> qualifiers;
 	
 	/**
-	 * Constructs a new {@code Key} instance from the specified type and binding 
-	 * annotations.
+	 * Constructs a new {@code Injectee} instance from the specified type and qualifiers.
 	 * 
 	 * @param type The class to qualify the component to be injected.
-	 * @param bindings The binding annotations to qualify the component to be injected.
+	 * @param qualifiers The qualifiers to qualify the component to be injected.
 	 */
-	public Key(Class<T> type, Set<Annotation> bindings) {
+	public Injectee(Kind kind, Class<?> type, Set<Annotation> qualifiers) {
+		Preconditions.checkNotNull(type, "Parameter 'kind' must not be [" + kind + "]");
 		Preconditions.checkNotNull(type, "Parameter 'type' must not be [" + type + "]");
+		this.kind = kind;
 		this.type = type;
-		this.bindings = (bindings == null) ? new HashSet<Annotation>(0) : bindings;
+		this.qualifiers = (qualifiers == null) ? new HashSet<Annotation>(0) : qualifiers;
+	}
+	
+	public Kind kind() {
+		return kind;
 	}
 	
 	/**
@@ -56,23 +69,23 @@ public class Key<T> {
 	 * 
 	 * @return The class to qualify the component to be injected.
 	 */
-	public Class<T> type() {
+	public Class<?> type() {
 		return type;
 	}
 	
 	/**
-	 * Returns the binding annotations to qualify the component to be injected.
+	 * Returns the qualifiers to qualify the component to be injected.
 	 * 
-	 * @return The binding annotations to qualify the component to be injected.
+	 * @return The qualifiers to qualify the component to be injected.
 	 */
-	public Set<Annotation> bindings() {
-		return bindings;
+	public Set<Annotation> qualifiers() {
+		return qualifiers;
 	}
 	
 	/** String representation. */
 	@Override
 	public String toString() {
-		return "type: " + type + ", bindings: " + bindings;
+		return "kind: " + kind + ", type: " + type + ", qualifiers: " + qualifiers;
 	}
 	
 }
