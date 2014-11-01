@@ -36,7 +36,7 @@ public interface Provider<T> {
 	 * </b>
 	 * Example implementation: 
 	 * <pre>
-	 * public class YourComponentProvider extends Provider&lt;YourObject&gt; {
+	 * public class YourComponentProvider extends Provider&lt;YourComponent&gt; {
 	 * 
 	 *     private final YourComponent component;
 	 *     

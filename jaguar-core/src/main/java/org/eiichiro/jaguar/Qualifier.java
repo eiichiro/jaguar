@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * {@code Qualifier}
+ * {@code ProviderTestQualifier}
  * 
  * @author <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>
  */

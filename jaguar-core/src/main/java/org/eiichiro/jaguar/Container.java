@@ -385,22 +385,16 @@ public class Container {
 			List<Class<?>> classes = Collections.emptyList();
 			
 			if (Provider.class.isAssignableFrom(component)) {
-				Type type = component.getGenericSuperclass();
-				
-				for (Class<?> superclass = component.getSuperclass(); 
-						!superclass.equals(Provider.class); superclass = superclass.getSuperclass()) {
-					if (type instanceof ParameterizedType) {
-						type = ((Class<?>) ((ParameterizedType) type).getRawType()).getGenericSuperclass();
-					} else {
-						type = ((Class<?>) type).getGenericSuperclass();
+				for (Type type : component.getGenericInterfaces()) {
+					if ((type instanceof ParameterizedType) && ((ParameterizedType) type).getRawType().equals(Provider.class)) {
+						Type t = ((ParameterizedType) type).getActualTypeArguments()[0];
+						Class<?> clazz = (Class<?>) ((t instanceof ParameterizedType) ? ((ParameterizedType) t).getRawType() : t);
+						classes = (List<Class<?>>) ClassUtils.getAllInterfaces(clazz);
+						classes.addAll(ClassUtils.getAllSuperclasses(clazz));
+						classes.add(clazz);
 					}
 				}
 				
-				Type t = ((ParameterizedType) type).getActualTypeArguments()[0];
-				Class<?> clazz = (Class<?>) ((t instanceof ParameterizedType) ? ((ParameterizedType) t).getRawType() : t);
-				classes = (List<Class<?>>) ClassUtils.getAllInterfaces(clazz);
-				classes.addAll(ClassUtils.getAllSuperclasses(clazz));
-				classes.add(clazz);
 			} else {
 				classes = (List<Class<?>>) ClassUtils.getAllInterfaces(component);
 				classes.addAll(ClassUtils.getAllSuperclasses(component));
