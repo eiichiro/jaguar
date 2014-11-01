@@ -7,6 +7,6 @@ import org.eiichiro.jaguar.Qualifier;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Qualifier
-public @interface InjecteeQualifier {
+public @interface TargetQualifier {
 
 }

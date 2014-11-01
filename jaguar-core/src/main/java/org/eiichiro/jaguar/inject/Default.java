@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 /**
  * Built-in binding annotation to qualify the component to be injected in 
  * preference if the container has duplicated components match to the specified 
- * component type or {@link Injectee}.
+ * component type or {@link Target}.
  * 
  * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */

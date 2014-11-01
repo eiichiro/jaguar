@@ -26,13 +26,13 @@ import com.google.common.base.Preconditions;
 /**
  * Component type and binding annotations to lookup the component from the 
  * container.
- * {@code Injectee} is constructed by the {@link Assembler} internally from the 
+ * {@code Target} is constructed by the {@link Assembler} internally from the 
  * {@code @Inject}-annotated constructor's parameters and field that the dependent 
  * component to be injected.
  * 
  * @author <a href="mailto:mail@eiichiro.org">Eiichiro Uchiumi</a>
  */
-public class Injectee {
+public class Target {
 
 	public static enum Kind {
 		PARAMETER, 
@@ -47,12 +47,12 @@ public class Injectee {
 	private final Set<Annotation> qualifiers;
 	
 	/**
-	 * Constructs a new {@code Injectee} instance from the specified type and qualifiers.
+	 * Constructs a new {@code Target} instance from the specified type and qualifiers.
 	 * 
 	 * @param type The class to qualify the component to be injected.
 	 * @param qualifiers The qualifiers to qualify the component to be injected.
 	 */
-	public Injectee(Kind kind, Class<?> type, Set<Annotation> qualifiers) {
+	public Target(Kind kind, Class<?> type, Set<Annotation> qualifiers) {
 		Preconditions.checkNotNull(type, "Parameter 'kind' must not be [" + kind + "]");
 		Preconditions.checkNotNull(type, "Parameter 'type' must not be [" + type + "]");
 		this.kind = kind;

@@ -16,9 +16,9 @@ public class ProviderTestComponentProvider implements Provider<ProviderTestCompo
 	}
 	
 	@Override
-	public ProviderTestComponent provide(Injectee injectee) {
+	public ProviderTestComponent provide(Target target) {
 		synchronized (components) {
-			for (Annotation qualifier : injectee.qualifiers()) {
+			for (Annotation qualifier : target.qualifiers()) {
 				if (qualifier.annotationType().equals(ProviderTestQualifier.class)) {
 					String value = ((ProviderTestQualifier) qualifier).value();
 					

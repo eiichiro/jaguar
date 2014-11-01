@@ -29,7 +29,7 @@ import net.sf.cglib.proxy.Enhancer;
 
 import org.eiichiro.jaguar.aspect.Interceptor;
 import org.eiichiro.jaguar.inject.Binding;
-import org.eiichiro.jaguar.inject.Injectee;
+import org.eiichiro.jaguar.inject.Target;
 import org.eiichiro.jaguar.lifecycle.Constructed;
 import org.eiichiro.jaguar.lifecycle.Event;
 import org.eiichiro.jaguar.validation.Constraint;
@@ -110,7 +110,7 @@ public class Assembler<T> {
 	 * event on the instance. If any exception has occurred, assembler returns 
 	 * <code>null</code> immediately.</li>
 	 * <li>Field dependency injection. Assembler gets the dependent component 
-	 * from the {@code Container} corresponding to the {@link Injectee} constructed from the 
+	 * from the {@code Container} corresponding to the {@link Target} constructed from the 
 	 * injectable field and populates it to the assembling instance. If any 
 	 * exception has occurred, assembler skips the failed population.
 	 * </li>
@@ -176,7 +176,7 @@ public class Assembler<T> {
 				}
 			}
 			
-			Object component = container.component(new Injectee(Injectee.Kind.FIELD, field.getType(), qualifiers));
+			Object component = container.component(new Target(Target.Kind.FIELD, field.getType(), qualifiers));
 			
 			try {
 				field.set(instance, component);
@@ -286,7 +286,7 @@ public class Assembler<T> {
 				}
 			}
 			
-			parameters.add(container.component(new Injectee(Injectee.Kind.PARAMETER, parameterTypes[i], qualifiers)));
+			parameters.add(container.component(new Target(Target.Kind.PARAMETER, parameterTypes[i], qualifiers)));
 		}
 		
 		return parameters;

@@ -10,4 +10,4 @@ import org.eiichiro.jaguar.inject.Binding;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
 @Binding
-public @interface InjecteeBinding {}
+public @interface TargetBinding {}

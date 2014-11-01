@@ -3,7 +3,7 @@ package org.eiichiro.jaguar;
 import org.eiichiro.jaguar.aspect.Before;
 import org.eiichiro.jaguar.aspect.Aspect;
 import org.eiichiro.jaguar.deployment.Production;
-import org.eiichiro.jaguar.inject.Injectee;
+import org.eiichiro.jaguar.inject.Target;
 import org.eiichiro.jaguar.inject.Provider;
 import org.eiichiro.jaguar.inject.Inject;
 import org.eiichiro.jaguar.lifecycle.Constructed;
@@ -39,7 +39,7 @@ public class DescriptorAspectProvider implements Provider<Object> {
 	public void lifecycle() {}
 
 	@Override
-	public Object provide(Injectee injectee) {
+	public Object provide(Target target) {
 		return instance;
 	}
 	

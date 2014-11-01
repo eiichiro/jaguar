@@ -35,7 +35,7 @@ import org.apache.commons.lang.ClassUtils;
 import org.eiichiro.jaguar.inject.Binding;
 import org.eiichiro.jaguar.inject.Provider;
 import org.eiichiro.jaguar.inject.Default;
-import org.eiichiro.jaguar.inject.Injectee;
+import org.eiichiro.jaguar.inject.Target;
 import org.eiichiro.jaguar.inject.Name;
 import org.eiichiro.jaguar.lifecycle.Activated;
 import org.eiichiro.jaguar.lifecycle.Event;
@@ -174,7 +174,7 @@ public class Container {
 			return null;
 		}
 		
-		return instance(component(descriptors.get(0)), new Injectee(Injectee.Kind.LOCAL_VARIABLE, component, Collections.EMPTY_SET));
+		return instance(component(descriptors.get(0)), new Target(Target.Kind.LOCAL_VARIABLE, component, Collections.EMPTY_SET));
 	}
 	
 	/**
@@ -186,16 +186,16 @@ public class Container {
 	 * in the candidate, this method returns it in preference.
 	 * 
 	 * @param <T> The component type.
-	 * @param injectee The {@link Injectee} constructed from the injective field to get 
+	 * @param target The {@link Target} constructed from the injective field to get 
 	 * the dependent component.
 	 * @return The component instance corresponding to the specified injectee.
 	 */
-	public <T> T component(final Injectee injectee) {
-		logger.debug("Component is requested with injectee: Injectee [" + injectee + "]");
+	public <T> T component(final Target target) {
+		logger.debug("Component is requested with target: Target [" + target + "]");
 		Collection<Descriptor<?>> descriptors = new ArrayList<>();
 		Class<?> deployment = deployment();
 		
-		for (Descriptor<?> descriptor : components.get(injectee.type())) {
+		for (Descriptor<?> descriptor : components.get(target.type())) {
 			Set<Class<? extends Annotation>> deployments = descriptor.deployments();
 			
 			if (deployments.isEmpty() || deployment == null
@@ -207,7 +207,7 @@ public class Container {
 		if (descriptors.isEmpty()) {
 			logger.warn("No component returned: Current deployment [" 
 					+ ((deployment == null) ? deployment : deployment.getSimpleName())
-					+ "]; Injectee [" + injectee 
+					+ "]; Target [" + target 
 					+ "]; You must install an appropriate component on ahead "
 					+ "invoking [public <T> void install(Class<T> component)]");
 			return null;
@@ -215,7 +215,7 @@ public class Container {
 		
 		final Set<Annotation> bindings = new HashSet<>();
 		
-		for (Annotation qualifier : injectee.qualifiers()) {
+		for (Annotation qualifier : target.qualifiers()) {
 			if (qualifier.annotationType().isAnnotationPresent(Binding.class)) {
 				bindings.add(qualifier);
 			}
@@ -230,11 +230,11 @@ public class Container {
 		});
 		
 		if (descriptors.isEmpty()) {
-			logger.warn("Component is missing: Injectee [" + injectee 
+			logger.warn("Component is missing: Target [" + target 
 					+ "]; You must specify binding annotations on the field correctly");
 			return null;
 		} else if (descriptors.size() == 1) {
-			return instance(component(descriptors.toArray(new Descriptor<?>[1])[0]), injectee);
+			return instance(component(descriptors.toArray(new Descriptor<?>[1])[0]), target);
 		} else {
 			descriptors = Collections2.filter(descriptors, new Predicate<Descriptor<?>>() {
 
@@ -253,9 +253,9 @@ public class Container {
 			if (descriptors.size() == 1) {
 				Descriptor<?> descriptor = descriptors.toArray(new Descriptor<?>[1])[0];
 				logger.debug("@Default qualified component [" + descriptor + "] is returned in preference");
-				return instance(component(descriptor), injectee);
+				return instance(component(descriptor), target);
 			} else {
-				logger.warn("Component is duplicated: Injectee [" + injectee
+				logger.warn("Component is duplicated: Target [" + target
 						+ "]; You must specify more concrete type " 
 						+ "or binding annotations strictly");
 				return null;
@@ -306,7 +306,7 @@ public class Container {
 					contexts.put(s, desc);
 				}
 				
-				return instance(component(desc), new Injectee(Injectee.Kind.LOCAL_VARIABLE, ctx, Collections.EMPTY_SET));
+				return instance(component(desc), new Target(Target.Kind.LOCAL_VARIABLE, ctx, Collections.EMPTY_SET));
 			}
 			
 		};
@@ -329,10 +329,10 @@ public class Container {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private <T> T instance(Object component, Injectee injectee) {
+	private <T> T instance(Object component, Target target) {
 		if (component instanceof Provider) {
 			Provider<T> provider = (Provider<T>) component;
-			return provider.provide(injectee);
+			return provider.provide(target);
 		}
 		
 		return (T) component;

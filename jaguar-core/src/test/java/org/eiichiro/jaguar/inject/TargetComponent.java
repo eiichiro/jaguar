@@ -1,11 +1,11 @@
 package org.eiichiro.jaguar.inject;
 
-public class InjecteeComponent {
+public class TargetComponent {
 
 	String string;
 	
 	Object object = "object";
 	
-	@InjecteeBinding @InjecteeQualifier Object object2;
+	@TargetBinding @TargetQualifier Object object2;
 	
 }
