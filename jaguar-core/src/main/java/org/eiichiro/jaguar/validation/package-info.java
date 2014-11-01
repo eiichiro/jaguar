@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-/** Provider validation. */
+/** Component validation. */
 package org.eiichiro.jaguar.validation;

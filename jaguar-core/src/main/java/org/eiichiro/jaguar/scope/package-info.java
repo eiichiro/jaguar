@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-/** Provider scope and context. */
+/** Component scope and context. */
 package org.eiichiro.jaguar.scope;

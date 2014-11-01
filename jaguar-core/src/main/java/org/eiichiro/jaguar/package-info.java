@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-/** Jaguar - Provider Jam */
+/** Jaguar - Component Jam */
 package org.eiichiro.jaguar;
