@@ -46,7 +46,7 @@ public interface Provider<T> {
 	 *     }
 	 *     
 	 *     {@code @Override}
-	 *     public YourComponent provide(Target injectee) {
+	 *     public YourComponent provide(Target target) {
 	 *         // Returning the instance. 
 	 *         return component;
 	 *     }

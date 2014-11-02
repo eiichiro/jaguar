@@ -16,6 +16,7 @@
 package org.eiichiro.jaguar.inject;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,17 +43,17 @@ public class Target {
 	
 	private final Kind kind;
 	
-	private final Class<?> type;
+	private final Type type;
 	
 	private final Set<Annotation> qualifiers;
 	
 	/**
 	 * Constructs a new {@code Target} instance from the specified type and qualifiers.
 	 * 
-	 * @param type The class to qualify the component to be injected.
+	 * @param type The type to qualify the component to be injected.
 	 * @param qualifiers The qualifiers to qualify the component to be injected.
 	 */
-	public Target(Kind kind, Class<?> type, Set<Annotation> qualifiers) {
+	public Target(Kind kind, Type type, Set<Annotation> qualifiers) {
 		Preconditions.checkNotNull(type, "Parameter 'kind' must not be [" + kind + "]");
 		Preconditions.checkNotNull(type, "Parameter 'type' must not be [" + type + "]");
 		this.kind = kind;
@@ -69,7 +70,7 @@ public class Target {
 	 * 
 	 * @return The class to qualify the component to be injected.
 	 */
-	public Class<?> type() {
+	public Type type() {
 		return type;
 	}
 	

@@ -33,6 +33,7 @@ import java.util.WeakHashMap;
 
 import org.apache.commons.lang.ClassUtils;
 import org.eiichiro.jaguar.inject.Binding;
+import org.eiichiro.jaguar.inject.LazyProvider;
 import org.eiichiro.jaguar.inject.Provider;
 import org.eiichiro.jaguar.inject.Default;
 import org.eiichiro.jaguar.inject.Target;
@@ -132,6 +133,7 @@ public class Container {
 		context = Prototype.class.getAnnotation(Scope.class).value();
 		install(context);
 		contexts.put(Prototype.class, (Descriptor<? extends Context>) components.get(context).get(0));
+		install(LazyProvider.class);
 		logger.info("Container started");
 	}
 	
@@ -188,14 +190,16 @@ public class Container {
 	 * @param <T> The component type.
 	 * @param target The {@link Target} constructed from the injective field to get 
 	 * the dependent component.
-	 * @return The component instance corresponding to the specified injectee.
+	 * @return The component instance corresponding to the specified target.
 	 */
 	public <T> T component(final Target target) {
 		logger.debug("Component is requested with target: Target [" + target + "]");
 		Collection<Descriptor<?>> descriptors = new ArrayList<>();
 		Class<?> deployment = deployment();
+		Type type = target.type();
 		
-		for (Descriptor<?> descriptor : components.get(target.type())) {
+		for (Descriptor<?> descriptor : components.get(
+				(type instanceof ParameterizedType) ? (Class<?>) ((ParameterizedType) type).getRawType() : (Class<?>) type)) {
 			Set<Class<? extends Annotation>> deployments = descriptor.deployments();
 			
 			if (deployments.isEmpty() || deployment == null

@@ -18,6 +18,7 @@ package org.eiichiro.jaguar;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -176,7 +177,7 @@ public class Assembler<T> {
 				}
 			}
 			
-			Object component = container.component(new Target(Target.Kind.FIELD, field.getType(), qualifiers));
+			Object component = container.component(new Target(Target.Kind.FIELD, field.getGenericType(), qualifiers));
 			
 			try {
 				field.set(instance, component);
@@ -272,7 +273,7 @@ public class Assembler<T> {
 	
 	private List<Object> parameters(Constructor<T> constructor) {
 		List<Object> parameters = new ArrayList<Object>();
-		Class<?>[] parameterTypes = constructor.getParameterTypes();
+		Type[] parameterTypes = constructor.getGenericParameterTypes();
 		Annotation[][] annotations = constructor.getParameterAnnotations();
 		
 		for (int i = 0; i < parameterTypes.length; i++) {
