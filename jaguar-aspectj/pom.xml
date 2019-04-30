@@ -17,11 +17,11 @@
   		<plugin>
   			<groupId>org.codehaus.mojo</groupId>
   			<artifactId>aspectj-maven-plugin</artifactId>
-  			<version>1.6</version>
+  			<version>1.11</version>
   			<configuration>
-  			    <complianceLevel>1.7</complianceLevel>
-  				<source>1.7</source>
-  				<target>1.7</target>
+  			    <complianceLevel>1.8</complianceLevel>
+  				<source>1.8</source>
+  				<target>1.8</target>
   				<testAspectDirectory>src/main/aspect</testAspectDirectory>
   			</configuration>
   			<executions>
@@ -39,7 +39,7 @@
   			<configuration>
   				<bottom><![CDATA[Copyright © 2011-2014 <a href="mailto:eiichiro@eiichiro.org">Eiichiro Uchiumi</a>. All Rights Reserved.]]></bottom>
   				<doctitle>${project.name} ${project.version} API Specifications</doctitle>
-  				<source>1.7</source>
+  				<source>1.8</source>
   			</configuration>
   		</plugin>
   	</plugins>
