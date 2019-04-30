@@ -15,17 +15,17 @@ public class BeforeTest {
 		BeforeComponent beforeComponent = component(BeforeComponent.class);
 		beforeComponent.method1();
 		assertThat(beforeComponent.order.size(), is(3));
-		assertThat(beforeComponent.order.get(0), is("before1"));
-		assertThat(beforeComponent.order.get(1), is("before2"));
+		assertTrue((beforeComponent.order.get(0).equals("before1") && beforeComponent.order.get(1).equals("before2"))
+				|| (beforeComponent.order.get(0).equals("before2") && beforeComponent.order.get(1).equals("before1")));
 		assertThat(beforeComponent.order.get(2), is("method1"));
 		shutdown();
-		
+
 		bootstrap();
 		install(BeforeComponent.class, BeforeAspect1.class);
 		beforeComponent = component(BeforeComponent.class);
 		beforeComponent.method2("before-");
 		shutdown();
-		
+
 		bootstrap();
 		install(BeforeComponent.class, BeforeAspect2.class);
 		beforeComponent = component(BeforeComponent.class);
@@ -34,20 +34,20 @@ public class BeforeTest {
 		assertThat(beforeComponent.order.get(0), is("before-before1"));
 		assertThat(beforeComponent.order.get(1), is("before-method2"));
 		shutdown();
-		
+
 		bootstrap();
 		install(BeforeComponent.class, BeforeAspect3.class);
 		beforeComponent = component(BeforeComponent.class);
-		
+
 		try {
 			beforeComponent.method2("before-");
 			fail();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		assertThat(beforeComponent.order.size(), is(0));
 		shutdown();
 	}
-	
+
 }

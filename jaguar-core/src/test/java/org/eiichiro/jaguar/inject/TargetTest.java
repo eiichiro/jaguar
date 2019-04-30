@@ -56,8 +56,8 @@ public class TargetTest {
 		
 		Target key = new Target(Target.Kind.FIELD, String.class, qualifiers);
 		assertThat(key.qualifiers().size(), is(2));
-		assertThat(((Annotation) key.qualifiers().toArray()[0]).annotationType(), is((Object) TargetQualifier.class));
-		assertThat(((Annotation) key.qualifiers().toArray()[1]).annotationType(), is((Object) TargetBinding.class));
+		assertThat(((Annotation) key.qualifiers().toArray()[0]).annotationType(), is((Object) TargetBinding.class));
+		assertThat(((Annotation) key.qualifiers().toArray()[1]).annotationType(), is((Object) TargetQualifier.class));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -72,7 +72,7 @@ public class TargetTest {
 		
 		Target key = new Target(Target.Kind.FIELD, (Class<Object>) field.getType(), qualifiers);
 		assertThat(key.toString(), 
-				is("kind: FIELD, type: class java.lang.Object, qualifiers: [@org.eiichiro.jaguar.inject.TargetQualifier(), @org.eiichiro.jaguar.inject.TargetBinding()]"));
+				is("kind: FIELD, type: class java.lang.Object, qualifiers: [@org.eiichiro.jaguar.inject.TargetBinding(), @org.eiichiro.jaguar.inject.TargetQualifier()]"));
 	}
 
 }
