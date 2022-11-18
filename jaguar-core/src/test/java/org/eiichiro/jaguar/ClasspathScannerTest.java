@@ -1,7 +1,10 @@
 package org.eiichiro.jaguar;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.net.URL;
@@ -14,7 +17,6 @@ import java.util.List;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.testing.ServletTester;
-import org.eiichiro.jaguar.ClasspathScanner;
 import org.eiichiro.reverb.system.Environment;
 import org.junit.Test;
 
@@ -33,18 +35,18 @@ public class ClasspathScannerTest {
 		
 		// Running on URLClassLoader.
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		
-		if (!(loader instanceof URLClassLoader)) {
-			fail();
-		}
-		
-		URLClassLoader classLoader = (URLClassLoader) loader;
-		List<URL> urls = Arrays.asList(classLoader.getURLs());
-		Collection<URL> paths = (Collection<URL>) new ClasspathScanner().paths();
-		assertThat(paths.size(), is(urls.size()));
-		
-		for (URL url : urls) {
-			assertTrue(paths.contains(url));
+		List<URL> urls = new ArrayList<>();
+		Collection<URL> paths = new ArrayList<>();
+
+		// JDK <=8
+		if (loader instanceof URLClassLoader) {
+			urls = Arrays.asList(((URLClassLoader) loader).getURLs());
+			paths = (Collection<URL>) new ClasspathScanner().paths();
+			assertThat(paths.size(), is(urls.size()));
+			
+			for (URL url : urls) {
+				assertTrue(paths.contains(url));
+			}
 		}
 		
 		// Standalone or running on a embedded Servlet container.
@@ -55,7 +57,7 @@ public class ClasspathScannerTest {
 			urls.add(new File(path).toURI().toURL());
 		}
 		
-		Thread.currentThread().setContextClassLoader(new ClassLoader(classLoader) {});
+		Thread.currentThread().setContextClassLoader(new ClassLoader(loader) {});
 		
 		if (Thread.currentThread().getContextClassLoader() instanceof URLClassLoader) {
 			fail();
